@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kalikiri Dashboard Login</title>
+
+    <style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding: 12px;
+        display: flex;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #eaf7ff, #c9e7fb, #a9d5ef);
+        color: #102c54;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 350px;
+        margin: auto;
+        padding: 20px 24px;
+        background: #ffffff;
+        border-radius: 18px;
+        box-shadow: 0 12px 35px rgba(16, 66, 110, 0.18);
+    }
+
+    .branding {
+        text-align: center;
+    }
+
+    .logo {
+        display: block;
+        width: 90px;
+        height: 90px;
+        object-fit: contain;
+        margin: 0 auto 10px;
+    }
+
+    .slogan {
+        margin: 0 0 14px;
+        color: #075563;
+        font-size: 11px;
+        font-weight: bold;
+        line-height: 1.4;
+        letter-spacing: 0.6px;
+    }
+
+    h1 {
+        margin: 0;
+        color: #144b8b;
+        font-size: clamp(18px, 5.5vw, 23px);
+        font-weight: 800;
+        line-height: 1.25;
+    }
+
+    .station-name {
+        margin: 6px 0 18px;
+        color: #0865bd;
+        font-size: 25px;
+        font-weight: 800;
+        letter-spacing: 2px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        height: 44px;
+        padding: 0 12px;
+        border: 1px solid #bdcadd;
+        border-radius: 9px;
+        background: #ffffff;
+        color: #102c54;
+        font: inherit;
+        font-size: 16px;
+    }
+
+    input::placeholder {
+        color: #7c8aa1;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: #1285b1;
+        box-shadow: 0 0 0 3px rgba(18, 133, 177, 0.15);
+    }
+
+    .field {
+        margin-bottom: 14px;
+    }
+
+    .password-box {
+        position: relative;
+    }
+
+    .password-box input {
+        padding-right: 68px;
+    }
+
+    .show-password {
+        position: absolute;
+        top: 0;
+        right: 4px;
+        height: 44px;
+        padding: 0 10px;
+        border: none;
+        background: transparent;
+        color: #0865a0;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    #loginBtn {
+        width: 100%;
+        height: 44px;
+        margin-top: 2px;
+        border: none;
+        border-radius: 9px;
+        background: linear-gradient(135deg, #1489b4, #086c93);
+        color: white;
+        font-size: 17px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        cursor: pointer;
+    }
+
+    #loginBtn:hover {
+        box-shadow: 0 5px 14px rgba(8, 108, 147, 0.25);
+    }
+
+    button:focus-visible {
+        outline: 3px solid #0865bd;
+        outline-offset: 3px;
+    }
+
+    #message {
+        margin: 10px 0 0;
+        color: #b42318;
+        text-align: center;
+        font-size: 13px;
+        line-height: 1.4;
+        overflow-wrap: anywhere;
+    }
+
+    #message:empty {
+        margin: 0;
+    }
+
+    @media (max-height: 550px) {
+        .login-card {
+            padding: 14px 20px;
+        }
+
+        .logo {
+            width: 65px;
+            height: 65px;
+            margin-bottom: 6px;
+        }
+
+        .slogan {
+            margin-bottom: 8px;
+        }
+
+        .station-name {
+            margin-bottom: 12px;
+        }
+
+        .field {
+            margin-bottom: 10px;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .login-card {
+            padding-left: 18px;
+            padding-right: 18px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+    <main class="login-card">
+
+        <div class="branding">
+            <img
+                src="aptransco-logo.png"
+                alt="APTRANSCO Logo"
+                class="logo"
+            >
+
+            <p class="slogan">
+                ENERGY SAVED IS ENERGY<br>
+                GENERATED
+            </p>
+
+            <h1>400KV SUBSTATION</h1>
+            <p class="station-name">KALIKIRI</p>
+        </div>
+
+        <div class="field">
+            <label for="employeeId">Email ID</label>
+            <input
+                type="email"
+                id="employeeId"
+                placeholder="Enter email address"
+                autocomplete="username"
+                autocapitalize="none"
+                spellcheck="false"
+            >
+        </div>
+
+        <div class="field">
+            <label for="password">Password</label>
+
+            <div class="password-box">
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password"
+                    autocomplete="current-password"
+                >
+
+                <button
+                    type="button"
+                    class="show-password"
+                    id="showPassword"
+                    aria-controls="password"
+                    aria-label="Show password"
+                    aria-pressed="false"
+                >Show</button>
+            </div>
+        </div>
+
+        <button type="button" id="loginBtn">LOGIN</button>
+
+        <p id="message" role="status" aria-live="polite"></p>
+
+    </main>
+
+    <script>
+        const showPassword = document.getElementById("showPassword");
+        const passwordInput = document.getElementById("password");
+
+        showPassword.addEventListener("click", function () {
+            const show = passwordInput.type === "password";
+
+            passwordInput.type = show ? "text" : "password";
+            showPassword.textContent = show ? "Hide" : "Show";
+            showPassword.setAttribute("aria-pressed", String(show));
+            showPassword.setAttribute(
+                "aria-label",
+                show ? "Hide password" : "Show password"
+            );
+        });
+    </script>
+
+    <script type="module" src="login.js"></script>
+
+</body>
+</html>
