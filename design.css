@@ -633,3 +633,12 @@ label{
         background-color: #FFF3F6;
     }
 }
+@media screen {
+    #calendarBox,
+    #testMessageSection,
+    .reading-card,
+    .report-actions {
+        border: 2px solid #9BB5D4;
+        box-shadow: 0 4px 12px rgba(16, 44, 84, 0.08);
+    }
+}
