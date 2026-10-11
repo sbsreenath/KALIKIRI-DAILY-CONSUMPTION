@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Kalikiri Substation Home</title>
+
+    <link rel="stylesheet" href="design.css">
+    <script type="module" src="auth-guard.js"></script>
+</head>
+
+<body>
+    <header class="dashboard-header">
+        <div class="brand">
+            <img src="aptransco-logo.png"
+                 alt="APTRANSCO logo"
+                 width="80"
+                 height="80">
+
+            <div>
+                <strong>APTRANSCO</strong>
+                <span>400 KV SS KALIKIRI</span>
+            </div>
+        </div>
+    </header>
+
+    <nav class="main-nav" aria-label="Main navigation">
+        <a href="home.html"
+           class="active"
+           aria-current="page">
+            Home
+        </a>
+
+        <a href="energy-meter.html">
+            Energy Meter Readings
+        </a>
+
+        <a href="Consumption Particulars.html">
+            Daily Consumption
+        </a>
+    </nav>
+
+    <main style="max-width: 1100px; margin: auto; padding: 24px;">
+        <h1>KALIKIRI SUBSTATION PORTAL</h1>
+
+        <p>Daily reports and energy meter readings in one place.</p>
+
+        <div class="readings-grid">
+            <section class="reading-card">
+                <h2>Energy Meter Readings</h2>
+
+                <p>
+                    Enter meter readings and calculate
+                    daily energy units.
+                </p>
+
+                <a href="energy-meter.html">
+                    Open Energy Meter Readings →
+                </a>
+            </section>
+
+            <section class="reading-card">
+                <h2>Daily Consumption</h2>
+
+                <p>
+                    Enter consumption particulars,
+                    generate and share reports.
+                </p>
+
+                <a href="Consumption Particulars.html">
+                    Open Daily Consumption →
+                </a>
+            </section>
+        </div>
+    </main>
+</body>
+</html>
