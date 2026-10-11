@@ -628,3 +628,8 @@ label{
     .reading input[type="time"], .reading:has(input + input) input[type="time"], h2 input[type="time"] { width: 138px; }
     @media (max-width: 760px) { input, textarea { font-size: 16px; } }
 }
+@media screen {
+    body {
+        background-color: #FFF3F6;
+    }
+}
