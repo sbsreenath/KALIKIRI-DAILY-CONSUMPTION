@@ -1,214 +1,112 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>400 KV SS Kalikiri Daily consumption Particulars</title>
-
-    <link rel="stylesheet" href="design.css">
-    <script src="consumption.js" defer></script>
-    <script type="module" src="auth-guard.js"></script>
-    <script type="module" src="firebase-save.js"></script>
-    <link rel="manifest" href="manifest.json">
-
-    <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>400 KV SS Kalikiri Daily consumption Particulars</title>
+<link href="design.css" rel="stylesheet"/>
+<script defer="" src="consumption.js"></script>
+<script src="auth-guard.js" type="module"></script>
+<script src="firebase-save.js" type="module"></script>
+<link href="manifest.json" rel="manifest"/>
+<script>
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.register("service-worker.js");
         }
     </script>
 </head>
+<body><header class="dashboard-header"><div class="brand"><img alt="APTRANSCO logo" height="68" src="aptransco-logo.png" width="68"/><div><strong>APTRANSCO</strong><span>400 KV SS KALIKIRI</span></div></div><div id="userAccountBox">
 
-<body>
-
-    <div id="userAccountBox">
-        <div id="dateTimeBox">
-            <p id="dateTime"></p>
-        </div>
-
-        <p id="loggedInEmail">Loading account...</p>
-
-        <button type="button" id="logoutBtn">Logout</button>
-    </div>
-
-    <div id="calendarBox">
-        <div class="calendarHeader">
-            <button type="button" id="prevMonth">❮</button>
-            <h3 id="calendarMonth"></h3>
-            <button type="button" id="nextMonth">❯</button>
-        </div>
-
-        <div id="calendarDays"></div>
-    </div>
-
-    <p>Good Morning Sir.</p>
-
-    <h1>400 KV SS Kalikiri Consumption Particulars on</h1>
-
-   <div class="date-test-row">
-    <form class="date-section">
-        <label for="reportDate">Date</label>
-        <input type="date" id="reportDate">
-    </form>
-
-    <div id="testMessageSection">
-        <label for="testMessage">Test Message</label>
-
-        <textarea
-            id="testMessage"
-            rows="4"
-            placeholder="Paste today's test message here..."
-        ></textarea>
-
-        <button type="button" id="autoFill">
+<p id="loggedInEmail">Loading account...</p><div id="dateTimeBox">
+<p id="dateTime"></p>
+</div>
+<button id="logoutBtn" type="button">Logout</button>
+</div></header><div class="dashboard-layout"><aside class="dashboard-sidebar"><div id="calendarBox"><p class="panel-label">REPORT CALENDAR</p>
+<div class="calendarHeader">
+<button id="prevMonth" type="button">❮</button>
+<h3 id="calendarMonth"></h3>
+<button id="nextMonth" type="button">❯</button>
+</div>
+<div id="calendarDays"></div>
+<p class="calendar-note">Select a date to view its readings.</p></div><div id="testMessageSection">
+<label for="testMessage">Test Message</label>
+<textarea id="testMessage" placeholder="Paste today's test message here..." rows="4"></textarea>
+<button id="autoFill" type="button">
             AUTO FILL
         </button>
-    </div>
-</div>   
-
-    <h2>(1)<u>IMPORT</u></h2>
-
-    <div class="reading">
-        <label>RTPP-1 =</label>
-        <input type="number" step="0.001" id="rtpp1">MU
-    </div>
-
-    <div class="reading">
-        <label>RTPP-2 =</label>
-        <input type="number" step="0.001" id="rtpp2">MU
-    </div>
-
-    <div class="reading">
-        <label>Chittoor-1 =</label>
-        <input type="number" step="0.001" id="chittoor1">MU
-    </div>
-
-    <div class="reading">
-        <label>Chittoor-2 =</label>
-        <input type="number" step="0.001" id="chittoor2">MU
-    </div>
-
-    <div class="reading">
-        <label>400KV IMPORT =</label>
-        <input type="number" step="0.001" id="import400">MU
-    </div>
-
-    <div class="reading">
-        <label>ICT IMPORT =</label>
-        <input type="number" step="0.001" id="importict">MU
-    </div>
-
-    <div class="reading">
-        <label>TOTAL IMPORT =</label>
-        <input id="totalImport" type="number" step="0.001">MU
-    </div>
-
-    <h2>(2)<u>EXPORT</u></h2>
-
-    <div class="reading">
-        <label>RTPP-1 =</label>
-        <input type="number" step="0.001" id="rtpp1export">MU
-    </div>
-
-    <div class="reading">
-        <label>RTPP-2 =</label>
-        <input type="number" step="0.001" id="rtpp2export">MU
-    </div>
-
-    <div class="reading">
-        <label>Chittoor-1 =</label>
-        <input type="number" step="0.001" id="chittoor1export">MU
-    </div>
-
-    <div class="reading">
-        <label>Chittoor-2 =</label>
-        <input type="number" step="0.001" id="chittoor2export">MU
-    </div>
-
-    <div class="reading">
-        <label>400KV EXPORT =</label>
-        <input type="number" step="0.001" id="export400">MU
-    </div>
-
-    <div class="reading">
-        <label>ICT EXPORT =</label>
-        <input type="number" step="0.001" id="exportict">MU
-    </div>
-
-    <div class="reading">
-        <label>TOTAL EXPORT =</label>
-        <input type="number" step="0.001" id="totalexport">MU
-    </div>
-
-    <h2>
+</div></aside><main class="dashboard-main"><div class="page-title"><h1>400 KV DAILY CONSUMPTION</h1><form class="date-section">
+<label for="reportDate">Date</label>
+<input id="reportDate" type="date"/>
+</form></div><div class="readings-grid"><section class="reading-card"><h2>(1)<u>IMPORT</u></h2><div class="reading">
+<label>RTPP-1 =</label>
+<input id="rtpp1" step="0.001" type="number"/>MU
+    </div><div class="reading">
+<label>RTPP-2 =</label>
+<input id="rtpp2" step="0.001" type="number"/>MU
+    </div><div class="reading">
+<label>Chittoor-1 =</label>
+<input id="chittoor1" step="0.001" type="number"/>MU
+    </div><div class="reading">
+<label>Chittoor-2 =</label>
+<input id="chittoor2" step="0.001" type="number"/>MU
+    </div><div class="reading">
+<label>400KV IMPORT =</label>
+<input id="import400" step="0.001" type="number"/>MU
+    </div><div class="reading">
+<label>ICT IMPORT =</label>
+<input id="importict" step="0.001" type="number"/>MU
+    </div><div class="reading">
+<label>TOTAL IMPORT =</label>
+<input id="totalImport" step="0.001" type="number"/>MU
+    </div></section><section class="reading-card"><h2>(2)<u>EXPORT</u></h2><div class="reading">
+<label>RTPP-1 =</label>
+<input id="rtpp1export" step="0.001" type="number"/>MU
+    </div><div class="reading">
+<label>RTPP-2 =</label>
+<input id="rtpp2export" step="0.001" type="number"/>MU
+    </div><div class="reading">
+<label>Chittoor-1 =</label>
+<input id="chittoor1export" step="0.001" type="number"/>MU
+    </div><div class="reading">
+<label>Chittoor-2 =</label>
+<input id="chittoor2export" step="0.001" type="number"/>MU
+    </div><div class="reading">
+<label>400KV EXPORT =</label>
+<input id="export400" step="0.001" type="number"/>MU
+    </div><div class="reading">
+<label>ICT EXPORT =</label>
+<input id="exportict" step="0.001" type="number"/>MU
+    </div><div class="reading">
+<label>TOTAL EXPORT =</label>
+<input id="totalexport" step="0.001" type="number"/>MU
+    </div></section><section class="reading-card"><h2>
         (3)MD on ICT =
-        <input type="number" step="0.001" id="mdict">MW @
-        <input type="time" id="mdictime">Hrs
-    </h2>
-
-    <div class="reading">
-        <label>MD on ICT -1 =</label>
-        <input type="number" step="0.001" id="mdict1">MW @
-        <input type="time">Hrs
-    </div>
-
-    <div class="reading">
-        <label>MD on ICT -2 =</label>
-        <input type="number" step="0.001" id="mdict2">MW @
-        <input type="time">Hrs
-    </div>
-
-    <br>
-
-    <h2>
+        <input id="mdict" step="0.001" type="number"/>MW @
+        <input id="mdictime" type="time"/>Hrs
+    </h2><div class="reading">
+<label>MD on ICT -1 =</label>
+<input id="mdict1" step="0.001" type="number"/>MW @
+        <input type="time"/>Hrs
+    </div><div class="reading">
+<label>MD on ICT -2 =</label>
+<input id="mdict2" step="0.001" type="number"/>MW @
+        <input type="time"/>Hrs
+    </div><br/></section><section class="reading-card"><h2>
         (4)Total Generation Units=
-        <input type="number" step="0.001" id="totalgeneration">MU
-    </h2>
-
-    <h2>(5)<u>400 KV Bus Voltages:</u></h2>
-
-    <div class="reading">
-        <label>Maximum =</label>
-        <input type="number" step="0.001" id="maxvoltage">KV @
-        <input type="text" id="maxvoltagetime">Hrs
-    </div>
-
-    <div class="reading">
-        <label>Minimum =</label>
-        <input type="number" step="0.001" id="minvoltage">KV @
-        <input type="time" id="minvoltagetime">Hrs
-    </div>
-
-    <h2>
+        <input id="totalgeneration" step="0.001" type="number"/>MU
+    </h2></section><section class="reading-card"><h2>(5)<u>400 KV Bus Voltages:</u></h2><div class="reading">
+<label>Maximum =</label>
+<input id="maxvoltage" step="0.001" type="number"/>KV @
+        <input id="maxvoltagetime" type="text"/>Hrs
+    </div><div class="reading">
+<label>Minimum =</label>
+<input id="minvoltage" step="0.001" type="number"/>KV @
+        <input id="minvoltagetime" type="time"/>Hrs
+    </div></section><section class="reading-card"><h2>
         (6)400 KV Bus Reactor =
-        <input type="text" id="busreactor">
-    </h2>
-
-    <h2>(7) Interruptions=</h2>
-
-    <div class="reading">
-        <textarea id="Interruptions">Nil</textarea>
-    </div>
-
-    <label for="reportName">Name:</label>
-    <input
-        type="text"
-        id="reportName"
-        placeholder="Enter your name"
-    >
-
-    <button id="generateReport">Generate Report</button>
-
-    <div
-        id="reportOutput"
-        style="white-space: pre-wrap; margin: 15px 0;"
-    ></div>
-
-    <button id="shareWhatsApp">📱 Share WhatsApp</button>
-
-    <p id="status">Status : In Service</p>
-
-    <button id="changeStatus">Change Status</button>
-
-</body>
+        <input id="busreactor" type="text"/>
+</h2></section><section class="reading-card"><h2>(7) Interruptions=</h2><div class="reading">
+<textarea id="Interruptions">Nil</textarea>
+</div></section></div><section class="report-actions"><label for="reportName">Name:</label><input id="reportName" placeholder="Enter your name" type="text"/><button id="generateReport">Generate Report</button><div id="reportOutput" style="white-space: pre-wrap; margin: 15px 0;"></div><button id="shareWhatsApp">📱 Share WhatsApp</button><p id="status">Status : In Service</p><button id="changeStatus">Change Status</button></section></main></div></body>
 </html>
