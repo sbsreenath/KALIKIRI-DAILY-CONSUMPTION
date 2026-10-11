@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
     <title>Kalikiri Energy Meter Readings</title>
 
     <link rel="stylesheet" href="design.css">
+
     <script type="module" src="auth-guard.js"></script>
+    <script type="module" src="energy-meter.js"></script>
 </head>
 
 <body>
@@ -27,7 +30,9 @@
     </header>
 
     <nav class="main-nav" aria-label="Main navigation">
-        <a href="home.html">Home</a>
+        <a href="home.html">
+            Home
+        </a>
 
         <a href="energy-meter.html"
            class="active"
@@ -40,15 +45,37 @@
         </a>
     </nav>
 
-    <main style="max-width: 1400px; margin: auto; padding: 24px;">
+    <main class="energy-page"
+          style="max-width: 1400px; margin: auto; padding: 24px;">
+
         <h1>ENERGY METER READINGS</h1>
 
-        <section class="reading-card" style="margin-top: 20px;">
-            <p>
-                Meter reading entry and automatic calculations
-                will be added here.
-            </p>
-        </section>
+        <div style="margin: 20px 0;">
+            <label for="energyDate">Date:</label>
+            <input type="date" id="energyDate">
+        </div>
+
+        <p id="energyMessage" role="status">
+            Select a date to load readings.
+        </p>
+
+        <div id="energyTables"></div>
+
+        <div class="energy-actions"
+             style="margin-top: 20px;">
+
+            <button type="button"
+                    id="saveEnergy"
+                    disabled>
+                Save Readings
+            </button>
+
+            <button type="button"
+                    id="printEnergy"
+                    disabled>
+                Print / PDF
+            </button>
+        </div>
     </main>
 </body>
 </html>
