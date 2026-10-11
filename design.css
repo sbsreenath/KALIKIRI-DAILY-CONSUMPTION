@@ -642,3 +642,14 @@ label{
         box-shadow: 0 4px 12px rgba(16, 44, 84, 0.08);
     }
 }
+@media screen {
+    .brand img {
+        border-radius: 0;
+        background: transparent;
+        padding: 0;
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        flex-shrink: 0;
+    }
+}
