@@ -1,123 +1,79 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { app, auth, watchDashboardAccess } from "./auth-guard.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDocFromServer, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-import {
-  getAuth,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc,
-  collection,
-  query,
-  where,
-  onSnapshot
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDe2q19jgNfbVsKFEorbFrMz6bafx2Inhg",
-  authDomain: "kalikiri-consumption.firebaseapp.com",
-  projectId: "kalikiri-consumption",
-  storageBucket: "kalikiri-consumption.firebasestorage.app",
-  messagingSenderId: "990485021817",
-  appId: "1:990485021817:web:bce85c175b248f7740c0a8"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 const db = getFirestore(app);
-window.saveReportToCloud = async function(date, report) {
-    const user = auth.currentUser;
+let reports = {};
+let ready = false;
+let stopReports = null;
+let access = {user:null,canEdit:false,ready:false};
+window.dashboardAccess = access;
 
-    if (!user) {
-        console.error("Login required");
-        return;
-    }
-
-    try {
-        await setDoc(doc(db, "dailyReports", date), {
-            report: report,
-            savedBy: user.uid,
-            savedAt: new Date().toISOString()
+function notify() {
+    window.dailySavedCompletion = Object.fromEntries(
+        Object.entries(reports).map(([date, data]) => [date, data.complete !== false])
+    );
+    window.dispatchEvent(new CustomEvent("daily-cloud-changed"));
+    if (typeof window.renderCalendar === "function") window.renderCalendar();
+}
+watchDashboardAccess(next => {
+    access = next;
+    window.dashboardAccess = next;
+    window.dispatchEvent(new CustomEvent("dashboard-access-changed", {detail:next}));
+});
+onAuthStateChanged(auth, user => {
+    stopReports?.();
+    stopReports = null;
+    reports = {};
+    ready = false;
+    localStorage.removeItem("kalikiriReports");
+    localStorage.removeItem("kalikiriEntries");
+    notify();
+    if (!user) return;
+    stopReports = onSnapshot(collection(db,"dailyReports"), {includeMetadataChanges:true}, snapshot => {
+        if (auth.currentUser?.uid !== user.uid || snapshot.metadata.fromCache) return;
+        const next = {};
+        snapshot.forEach(item => {
+            if (!item.metadata.hasPendingWrites) next[item.id] = item.data();
+            else if (reports[item.id]) next[item.id] = reports[item.id];
         });
-
-        console.log("Cloud report saved successfully");
-    } catch (error) {
-        console.error("Cloud saving failed:", error);
-    }
-};
-/* LOAD REPORTS FROM CLOUD */
-
-let stopCloudListener = null;
-
-onAuthStateChanged(auth, (user) => {
-    if (stopCloudListener) {
-        stopCloudListener();
-        stopCloudListener = null;
-    }
-
-    if (!user) {
-        return;
-    }
-
-    const reportsQuery = query(
-        collection(db, "dailyReports"),
-        where("savedBy", "==", user.uid)
-    );
-
-    stopCloudListener = onSnapshot(
-        reportsQuery,
-        (snapshot) => {
-            if (auth.currentUser?.uid !== user.uid) {
-                return;
-            }
-
-            try {
-                const savedReports = JSON.parse(
-                    localStorage.getItem("kalikiriReports") || "{}"
-                );
-
-                snapshot.forEach((reportDoc) => {
-                    const data = reportDoc.data();
-
-                    if (typeof data.report === "string") {
-                        savedReports[reportDoc.id] = data.report;
-                    }
-                });
-
-                localStorage.setItem(
-                    "kalikiriReports",
-                    JSON.stringify(savedReports)
-                );
-
-                if (typeof window.renderCalendar === "function") {
-                    window.renderCalendar();
-                }
-
-                console.log("Cloud reports loaded successfully");
-            } catch (error) {
-                console.error("Report loading failed:", error);
-            }
-        },
-        (error) => {
-            console.error("Cloud reading failed:", error);
-            alert("Cloud reports could not load: " + error.code);
-        }
-    );
+        reports = next;
+        ready = true;
+        const text = {};
+        Object.entries(reports).forEach(([date,data]) => {
+            if (typeof data.report === "string") text[date] = data.report;
+        });
+        localStorage.setItem("kalikiriReports",JSON.stringify(text));
+        notify();
+    }, error => {
+        ready = false;
+        console.error("Daily cloud reading failed:",error);
+        window.dispatchEvent(new CustomEvent("daily-cloud-error",{detail:error.code || error.message}));
+    });
 });
 
-/* SHOW REPORT WHEN DATE CHANGES */
+export function dailyCloudState() { return {ready,user:auth.currentUser}; }
+export function getSavedDaily(date) { return reports[date] || null; }
 
-document.getElementById("reportDate")
-    .addEventListener("change", function () {
-        const savedReports = JSON.parse(
-            localStorage.getItem("kalikiriReports") || "{}"
-        );
+export async function saveDaily(date, data) {
+    const user = auth.currentUser;
+    if (!user || !access.ready || !access.canEdit || access.user?.uid !== user.uid) {
+        throw new Error("You have view-only access. Saving is not allowed.");
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error("Select a valid date.");
+    const saved = {...data,savedBy:user.uid,savedAt:new Date().toISOString(),schemaVersion:2};
+    await setDoc(doc(db,"dailyReports",date),saved);
+    if (auth.currentUser?.uid !== user.uid) throw new Error("Account changed while saving.");
+    reports[date] = saved;
+    const cache = {};
+    Object.entries(reports).forEach(([key,value]) => {if(typeof value.report === "string") cache[key]=value.report;});
+    localStorage.setItem("kalikiriReports",JSON.stringify(cache));
+    notify();
+    return saved;
+}
 
-        const report = savedReports[this.value] || "";
-
-        document.getElementById("reportOutput").textContent = report;
-        window.lastReport = report;
-    });
+export async function loadDailyEnergy(date) {
+    if (!auth.currentUser) throw new Error("Login required.");
+    const snapshot = await getDocFromServer(doc(db,"energyReadings",date));
+    return snapshot.exists() ? snapshot.data() : null;
+}

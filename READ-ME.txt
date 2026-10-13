@@ -1,0 +1,24 @@
+PARTIAL SAVED CALENDAR — DIAGONAL + SLOW BLINK
+
+1. Back up firebase-save.js and energy-cloud.js.
+2. Copy all THREE JavaScript files from this ZIP into the existing project folder:
+   firebase-save.js (replace)
+   energy-cloud.js (replace; retains the partial-save update)
+   calendar-save-status.js (new)
+3. In BOTH Consumption Particulars.html and energy-meter.html, paste this immediately before </body>:
+
+<script type="module" src="calendar-save-status.js"></script>
+
+4. Save and press Ctrl+Shift+R.
+
+Partially saved dates: diagonal half yellow/half light pink, with a slow 4-second gentle blink.
+Fully saved dates: retain their existing solid highlight and remain steady.
+After remaining fields are completed and saved, the partial styling disappears.
+Daily completion uses the existing complete flag added by the Daily partial-save update.
+Energy completion checks all 24 opening/closing pairs, including older documents.
+Old Daily text-only reports without a completion flag retain their existing appearance.
+A partial document is still saved and can be reopened. The colour describes completeness, not save failure.
+No calculation, field value, report layout, date navigation or save permission changes.
+People with reduced-motion enabled see the diagonal colour without animation.
+
+Functional calendar tests passed for both partial styles, steady complete dates and changing partial to complete. No live Firebase data was modified.

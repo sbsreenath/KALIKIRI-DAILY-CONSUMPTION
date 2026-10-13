@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kalikiri Monthly Energy Register</title>
+  <link rel="stylesheet" href="design.css">
+  <link rel="stylesheet" href="monthly-energy.css">
+  <link rel="stylesheet" href="monthly-register-controls.css">
+  <script type="module" src="auth-guard.js"></script>
+  <script defer src="monthly-energy.js"></script>
+  <script defer src="monthly-register-controls.js"></script>
+</head>
+<body class="monthly-register-page">
+  <header class="dashboard-header centered-header">
+    <div class="brand">
+      <svg class="transco-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1376 1584" role="img" aria-label="APTRANSCO logo">
+        <defs>
+          <clipPath id="transcoBase"><path clip-rule="evenodd" d="M0 0H1376V1584H0Z M920 40V250H1310V40Z M0 570V770H360V570Z"/></clipPath>
+          <clipPath id="transcoBoltTop"><rect x="920" y="40" width="390" height="210"/></clipPath>
+          <clipPath id="transcoBoltLeft"><rect x="0" y="570" width="360" height="200"/></clipPath>
+          <mask id="transcoTowerMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1376" height="1584" style="mask-type: alpha;"><image href="aptransco-logo.png" width="1376" height="1584"/></mask>
+          <clipPath id="transcoTowerArea"><rect x="0" y="0" width="1376" height="1180"/></clipPath>
+          <linearGradient id="transcoShine" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#baf5ff" stop-opacity="0"/><stop offset="50%" stop-color="#e8ffff" stop-opacity="0.95"/><stop offset="100%" stop-color="#baf5ff" stop-opacity="0"/></linearGradient>
+        </defs>
+        <g clip-path="url(#transcoBase)"><image href="aptransco-logo.png" width="1376" height="1584"/><g clip-path="url(#transcoTowerArea)"><g mask="url(#transcoTowerMask)"><rect class="tower-current" x="0" y="-240" width="1376" height="240" fill="url(#transcoShine)"/></g></g></g>
+        <g class="bolt-top"><image href="aptransco-logo.png" width="1376" height="1584" clip-path="url(#transcoBoltTop)"/></g>
+        <g class="bolt-left"><image href="aptransco-logo.png" width="1376" height="1584" clip-path="url(#transcoBoltLeft)"/></g>
+      </svg>
+      <div class="station-heading"><h1>TRANSMISSION CORPORATION OF ANDHRA PRADESH LIMITED</h1><p class="station-voltage">400 KV SUBSTATION</p><p class="station-location">KALIKIRI</p></div>
+    </div>
+    <div id="userAccountBox">
+      <a id="loggedInEmail" class="header-email" href="mailto:">Loading account...</a>
+      <div id="dateTimeBox"><p id="dateTime"></p></div>
+      <button id="logoutBtn" type="button">Logout</button>
+    </div>
+    <div class="energy-ticker" aria-label="Energy conservation message"><span class="energy-ticker-text">⚡ ENERGY SAVED IS ENERGY GENERATED ⚡ &nbsp; • &nbsp; <span class="energy-leaf" aria-hidden="true">🌿</span> SAVE ENERGY, SAVE THE NATION <span class="energy-leaf" aria-hidden="true">🌿</span></span></div>
+  </header>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="home.html">Home</a>
+    <a href="Consumption%20Particulars.html">Daily Consumption</a>
+    <a href="energy-meter.html">Energy Meter Readings</a>
+    <a href="monthly-energy.html">Monthly Energy Meter Readings</a>
+    <a href="consolidated-report.html">Consolidated Reports</a>
+  </nav>
+  <main>
+    <div class="register-controls" id="monthlyRegisterToolbar">
+      <button class="monthly-back-button" id="monthlyBackButton" type="button"><span class="monthly-back-arrows" aria-hidden="true">◀ ◀ ◀</span><span>Back to Feeder Selection</span></button>
+      <div class="monthly-feeder-switch" role="group" aria-label="Select register feeder">
+        <button id="monthlyPreviousFeeder" type="button" aria-label="Previous feeder">‹</button>
+        <select id="monthlyFeederSelect" aria-label="Feeder">
+          <optgroup label="400 kV Feeders"><option value="rtpp1">RTPP-1</option><option value="rtpp2">RTPP-2</option><option value="chittoor1">Chittoor-1</option><option value="chittoor2">Chittoor-2</option></optgroup>
+          <optgroup label="ICTs"><option value="ict1">ICT-1</option><option value="ict2">ICT-2</option></optgroup>
+          <optgroup label="220 kV Feeders"><option value="kalikiri1">Kalikiri-1</option><option value="kalikiri2">Kalikiri-2</option><option value="madanapalli1">Madanapalli-1</option><option value="madanapalli2">Madanapalli-2</option></optgroup>
+        </select>
+        <button id="monthlyNextFeeder" type="button" aria-label="Next feeder">›</button>
+      </div>
+      <div class="monthly-month-control"><label for="registerMonth">Month:</label><input type="month" id="registerMonth"></div>
+    </div>
+    <section id="registerPanel" hidden>
+      <p id="registerStatus" role="status"></p>
+      <h2 id="registerTitle"></h2>
+      <div id="formulaBox"></div>
+      <h3>Month Opening Readings — 00:00 on Day 1</h3>
+      <p>Previous month's last-day closing readings.</p>
+      <div id="openingReadings"></div>
+      <div class="table-scroll"><table id="monthlyTable"><caption id="registerCaption"></caption><thead id="monthlyTableHead"></thead><tbody id="monthlyTableBody"></tbody><tfoot id="monthlyTableFoot"></tfoot></table></div>
+      <div id="monthlySummary"></div>
+      <div class="register-actions"><button id="saveMonthly" type="button" disabled>Save Readings</button><button id="printMonthly" type="button" disabled>Print / PDF</button></div>
+    </section>
+  </main>
+  <div id="monthlySaveBar" class="monthly-save-bar" hidden>
+    <div class="monthly-save-details"><strong id="monthlySaveTitle"></strong><span id="monthlySaveStatus" role="status" aria-live="polite"></span></div>
+    <button id="monthlyQuickSave" type="button" disabled>Save Readings</button>
+  </div>
+  <dialog id="monthlyUnsavedDialog" aria-labelledby="monthlyUnsavedTitle" aria-describedby="monthlyUnsavedMessage">
+    <h2 id="monthlyUnsavedTitle">Unsaved readings</h2>
+    <p id="monthlyUnsavedMessage" role="status">You have unsaved readings. Save before leaving?</p>
+    <div class="monthly-unsaved-actions"><button id="monthlySaveContinue" type="button">Save &amp; Continue</button><button id="monthlyStayHere" type="button" autofocus>Stay Here</button><button id="monthlyDiscardContinue" type="button">Discard &amp; Continue</button></div>
+  </dialog>
+  <script>
+    (() => {
+      const clock = document.getElementById("dateTime");
+      if (!clock) return;
+      function updateHeaderClock() {
+        const now = new Date();
+        const date = now.toLocaleDateString("en-GB", {timeZone:"Asia/Kolkata"});
+        const time = now.toLocaleTimeString("en-US", {timeZone:"Asia/Kolkata",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:true});
+        clock.textContent = "Date: " + date + " | Time: " + time;
+      }
+      updateHeaderClock();
+      setInterval(updateHeaderClock, 1000);
+    })();
+  </script>
+  <script>
+    (() => {
+      const currentFile = decodeURIComponent(window.location.pathname.split("/").pop());
+      const activeFile = currentFile === "monthly-register.html" ? "monthly-energy.html" : currentFile;
+      document.querySelectorAll(".main-nav a").forEach(link => {
+        const targetFile = decodeURIComponent(new URL(link.href).pathname.split("/").pop());
+        const active = targetFile === activeFile;
+        link.classList.toggle("active", active);
+        if (active) link.setAttribute("aria-current", "page");
+        else link.removeAttribute("aria-current");
+      });
+    })();
+  </script>
+  <script type="module" src="compact-save-bar.js"></script>
+</body>
+</html>

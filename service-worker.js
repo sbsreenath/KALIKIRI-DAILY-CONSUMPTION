@@ -1,4 +1,4 @@
-const CACHE_NAME = "kalikiri-dashboard-v8";
+const CACHE_NAME = "kalikiri-daily-consumption-v1";
 
 const FILES_TO_CACHE = [
     "./",
@@ -52,7 +52,7 @@ self.addEventListener("activate", event => {
         await Promise.all(
             cacheNames
                 .filter(name =>
-                    name.startsWith("kalikiri-dashboard-") &&
+                    name.startsWith("kalikiri-daily-consumption-") &&
                     name !== CACHE_NAME
                 )
                 .map(name => caches.delete(name))

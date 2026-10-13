@@ -1,124 +1,377 @@
 <!DOCTYPE html>
-
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>400 KV SS Kalikiri Daily consumption Particulars</title>
-<link href="design.css" rel="stylesheet"/>
-<script defer="" src="consumption.js"></script>
-<script src="auth-guard.js" type="module"></script>
-<script src="firebase-save.js" type="module"></script>
-<link href="manifest.json" rel="manifest"/>
-<script>
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("service-worker.js");
-        }
-    </script>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>400 KV SS Kalikiri Daily consumption Particulars</title>
+    <link href="design.css" rel="stylesheet" />
+    <link href="daily-page-controls.css" rel="stylesheet" />
+    <script defer src="consumption.js"></script>
+    <script src="auth-guard.js" type="module"></script>
+    <script src="firebase-save.js" type="module"></script>
+    <script src="daily-page-controls.js" type="module"></script>
+    <link href="manifest.json" rel="manifest" />
+    <script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("service-worker.js"); }</script>
 </head>
-<body><header class="dashboard-header"><div class="brand"><img alt="APTRANSCO logo" height="68" src="aptransco-logo.png" width="68"/><div><strong>APTRANSCO</strong><span>400 KV SS KALIKIRI</span></div></div><div id="userAccountBox">
 
-<p id="loggedInEmail">Loading account...</p><div id="dateTimeBox">
-<p id="dateTime"></p>
+<body class="daily-consumption-page">
+    <header class="dashboard-header centered-header">
+        <div class="brand">
+            <svg class="transco-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1376 1584" role="img"
+                aria-label="APTRANSCO logo">
+                <defs>
+                    <clipPath id="transcoBase">
+                        <path clip-rule="evenodd" d="M0 0H1376V1584H0Z M920 40V250H1310V40Z M0 570V770H360V570Z" />
+                    </clipPath>
+                    <clipPath id="transcoBoltTop">
+                        <rect x="920" y="40" width="390" height="210" />
+                    </clipPath>
+                    <clipPath id="transcoBoltLeft">
+                        <rect x="0" y="570" width="360" height="200" />
+                    </clipPath>
+                    <mask id="transcoTowerMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1376" height="1584"
+                        style="mask-type: alpha;">
+                        <image href="aptransco-logo.png" width="1376" height="1584" />
+                    </mask>
+                    <clipPath id="transcoTowerArea">
+                        <rect x="0" y="0" width="1376" height="1180" />
+                    </clipPath>
+                    <linearGradient id="transcoShine" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#baf5ff" stop-opacity="0" />
+                        <stop offset="50%" stop-color="#e8ffff" stop-opacity="0.95" />
+                        <stop offset="100%" stop-color="#baf5ff" stop-opacity="0" />
+                    </linearGradient>
+                </defs>
+                <g clip-path="url(#transcoBase)">
+                    <image href="aptransco-logo.png" width="1376" height="1584" />
+                    <g clip-path="url(#transcoTowerArea)">
+                        <g mask="url(#transcoTowerMask)">
+                            <rect class="tower-current" x="0" y="-240" width="1376" height="240"
+                                fill="url(#transcoShine)" />
+                        </g>
+                    </g>
+                </g>
+                <g class="bolt-top">
+                    <image href="aptransco-logo.png" width="1376" height="1584" clip-path="url(#transcoBoltTop)" />
+                </g>
+                <g class="bolt-left">
+                    <image href="aptransco-logo.png" width="1376" height="1584" clip-path="url(#transcoBoltLeft)" />
+                </g>
+            </svg>
+            <div class="station-heading">
+                <h1>TRANSMISSION CORPORATION OF ANDHRA PRADESH LIMITED</h1>
+                <p class="station-voltage">400 KV SUBSTATION</p>
+                <p class="station-location">KALIKIRI</p>
+            </div>
+        </div>
+        <div id="userAccountBox">
+            <a id="loggedInEmail" class="header-email" href="mailto:">Loading account...</a>
+            <div id="dateTimeBox">
+                <p id="dateTime"></p>
+            </div>
+            <button id="logoutBtn" type="button">Logout</button>
+        </div>
+        <div class="energy-ticker" aria-label="Energy conservation message"><span class="energy-ticker-text">⚡ ENERGY
+                SAVED IS ENERGY GENERATED ⚡ &nbsp; • &nbsp; <span class="energy-leaf" aria-hidden="true">🌿</span> SAVE
+                ENERGY, SAVE THE NATION <span class="energy-leaf" aria-hidden="true">🌿</span></span></div>
+    </header>
+    <nav class="main-nav" aria-label="Main navigation">
+        <a href="home.html">Home</a>
+        <a href="Consumption%20Particulars.html">Daily Consumption</a>
+        <a href="energy-meter.html">Energy Meter Readings</a>
+        <a href="monthly-energy.html">Monthly Energy Meter Readings</a>
+        <a href="consolidated-report.html">Consolidated Reports</a>
+    </nav>
+
+    <div class="dashboard-layout">
+        <aside class="dashboard-sidebar">
+            <div id="calendarBox">
+                <p class="panel-label">REPORT CALENDAR</p>
+                <div class="calendarHeader"><button id="prevMonth" type="button">❮</button>
+                    <h3 id="calendarMonth"></h3><button id="nextMonth" type="button">❯</button>
+                </div>
+                <div id="calendarDays"></div>
+                <p class="calendar-note">Select a date to view its readings.</p>
+            </div>
+            <div id="testMessageSection">
+  <label for="testMessage">REPORT MESSAGE</label>
+
+  <div class="report-message-input">
+    <textarea
+      id="testMessage"
+      rows="6"
+      placeholder="Paste a current or previous consumption report here."
+    ></textarea>
+
+    <span class="report-paste-prompt" aria-hidden="true">
+      Paste a current or previous consumption report here.
+    </span>
+  </div>
+
+  <p class="report-message-help">
+    Paste the report, then select Auto Fill.
+  </p>
+
+  <button id="autoFill" type="button">
+    AUTO FILL
+  </button>
 </div>
-<button id="logoutBtn" type="button">Logout</button>
-</div></header>
-<nav class="main-nav" aria-label="Main navigation">
-    <a href="home.html">Home</a>
 
-    <a href="energy-meter.html">Energy Meter Readings</a>
+<style>
+  #testMessageSection {
+    padding: 22px;
+    background: #fff1f5;
+    border: 2px solid #b6c7da;
+    border-radius: 18px;
+    box-sizing: border-box;
+  }
 
-    <a href="Consumption Particulars.html"
-       class="active"
-       aria-current="page">
-        Daily Consumption
-    </a>
-</nav>
-<div class="dashboard-layout"><aside class="dashboard-sidebar"><div id="calendarBox"><p class="panel-label">REPORT CALENDAR</p>
-<div class="calendarHeader">
-<button id="prevMonth" type="button">❮</button>
-<h3 id="calendarMonth"></h3>
-<button id="nextMonth" type="button">❯</button>
-</div>
-<div id="calendarDays"></div>
-<p class="calendar-note">Select a date to view its readings.</p></div><div id="testMessageSection">
-<label for="testMessage">Test Message</label>
-<textarea id="testMessage" placeholder="Paste today's test message here..." rows="4"></textarea>
-<button id="autoFill" type="button">
-            AUTO FILL
-        </button>
-</div></aside><main class="dashboard-main"><div class="page-title"><h1>400 KV DAILY CONSUMPTION</h1><form class="date-section">
-<label for="reportDate">Date</label>
-<input id="reportDate" type="date"/>
-</form></div><div class="readings-grid"><section class="reading-card"><h2>(1)<u>IMPORT</u></h2><div class="reading">
-<label>RTPP-1 =</label>
-<input id="rtpp1" step="0.001" type="number"/>MU
-    </div><div class="reading">
-<label>RTPP-2 =</label>
-<input id="rtpp2" step="0.001" type="number"/>MU
-    </div><div class="reading">
-<label>Chittoor-1 =</label>
-<input id="chittoor1" step="0.001" type="number"/>MU
-    </div><div class="reading">
-<label>Chittoor-2 =</label>
-<input id="chittoor2" step="0.001" type="number"/>MU
-    </div><div class="reading">
-<label>400KV IMPORT =</label>
-<input id="import400" step="0.001" type="number"/>MU
-    </div><div class="reading">
-<label>ICT IMPORT =</label>
-<input id="importict" step="0.001" type="number"/>MU
-    </div><div class="reading">
-<label>TOTAL IMPORT =</label>
-<input id="totalImport" step="0.001" type="number"/>MU
-    </div></section><section class="reading-card"><h2>(2)<u>EXPORT</u></h2><div class="reading">
-<label>RTPP-1 =</label>
-<input id="rtpp1export" step="0.001" type="number"/>MU
-    </div><div class="reading">
-<label>RTPP-2 =</label>
-<input id="rtpp2export" step="0.001" type="number"/>MU
-    </div><div class="reading">
-<label>Chittoor-1 =</label>
-<input id="chittoor1export" step="0.001" type="number"/>MU
-    </div><div class="reading">
-<label>Chittoor-2 =</label>
-<input id="chittoor2export" step="0.001" type="number"/>MU
-    </div><div class="reading">
-<label>400KV EXPORT =</label>
-<input id="export400" step="0.001" type="number"/>MU
-    </div><div class="reading">
-<label>ICT EXPORT =</label>
-<input id="exportict" step="0.001" type="number"/>MU
-    </div><div class="reading">
-<label>TOTAL EXPORT =</label>
-<input id="totalexport" step="0.001" type="number"/>MU
-    </div></section><section class="reading-card"><h2>
-        (3)MD on ICT =
-        <input id="mdict" step="0.001" type="number"/>MW @
-        <input id="mdictime" type="time"/>Hrs
-    </h2><div class="reading">
-<label>MD on ICT -1 =</label>
-<input id="mdict1" step="0.001" type="number"/>MW @
-        <input type="time"/>Hrs
-    </div><div class="reading">
-<label>MD on ICT -2 =</label>
-<input id="mdict2" step="0.001" type="number"/>MW @
-        <input type="time"/>Hrs
-    </div><br/></section><section class="reading-card"><h2>
-        (4)Total Generation Units=
-        <input id="totalgeneration" step="0.001" type="number"/>MU
-    </h2></section><section class="reading-card"><h2>(5)<u>400 KV Bus Voltages:</u></h2><div class="reading">
-<label>Maximum =</label>
-<input id="maxvoltage" step="0.001" type="number"/>KV @
-        <input id="maxvoltagetime" type="time"/>Hrs
-    </div><div class="reading">
-<label>Minimum =</label>
-<input id="minvoltage" step="0.001" type="number"/>KV @
-        <input id="minvoltagetime" type="time"/>Hrs
-    </div></section><section class="reading-card"><h2>
-        (6)400 KV Bus Reactor =
-        <input id="busreactor" type="text"/>
-</h2></section><section class="reading-card"><h2>(7) Interruptions=</h2><div class="reading">
-<textarea id="Interruptions">Nil</textarea>
-</div></section></div><section class="report-actions"><label for="reportName">Name:</label><input id="reportName" placeholder="Enter your name" type="text"/><button id="generateReport">Generate Report</button><div id="reportOutput" style="white-space: pre-wrap; margin: 15px 0;"></div><button id="shareWhatsApp">📱 Share WhatsApp</button><p id="status">Status : In Service</p><button id="changeStatus">Change Status</button></section></main></div></body>
+  #testMessageSection label {
+    display: block;
+    margin-bottom: 14px;
+    color: #102c54;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  #testMessageSection .report-message-input {
+    position: relative;
+    background: white;
+    border: 2px solid #3974a5;
+    border-radius: 12px;
+    animation: reportBorderPulse 3.5s ease-in-out infinite;
+  }
+
+  #testMessage {
+    display: block;
+    width: 100%;
+    min-height: 190px;
+    margin: 0;
+    padding: 18px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: #102c54;
+    font: 16px/1.6 Arial, sans-serif;
+    resize: vertical;
+  }
+
+  #testMessage::placeholder {
+    color: transparent;
+  }
+
+  #testMessageSection .report-paste-prompt {
+    position: absolute;
+    top: 20px;
+    left: 18px;
+    right: 18px;
+    color: #194f85;
+    font: 16px/1.6 Arial, sans-serif;
+    pointer-events: none;
+    transform-origin: left center;
+    animation: reportTextPulse 3.5s ease-in-out infinite;
+  }
+
+  #testMessageSection .report-message-input:focus-within,
+  #testMessageSection .report-message-input.has-content {
+    animation: none;
+    border-color: #194f85;
+  }
+
+  #testMessageSection .report-message-input:focus-within
+    .report-paste-prompt,
+  #testMessageSection .has-content .report-paste-prompt {
+    display: none;
+  }
+
+  #testMessage:focus::placeholder {
+    color: #526a7d;
+  }
+
+  #testMessageSection .report-message-help {
+    margin: 12px 0 16px;
+    color: #526a7d;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  #testMessageSection #autoFill {
+    width: 100%;
+    min-height: 46px;
+    padding: 12px;
+    border: 1px solid #b58a24;
+    border-radius: 9px;
+    background: #f0d58e;
+    color: #102c54;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  #testMessageSection #autoFill:not(:disabled):hover {
+    background: #dfb54f;
+  }
+
+  #testMessageSection #autoFill:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @keyframes reportBorderPulse {
+    0%, 100% {
+      border-color: #3974a5;
+      box-shadow: 0 0 0 0 #194f8510;
+    }
+    50% {
+      border-color: #c59b37;
+      box-shadow: 0 0 0 4px #dfb54f20;
+    }
+  }
+
+  @keyframes reportTextPulse {
+    0%, 100% {
+      transform: translateX(0) scale(1);
+      color: #194f85;
+    }
+    50% {
+      transform: translateX(3px) scale(1.025);
+      color: #856019;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #testMessageSection .report-message-input,
+    #testMessageSection .report-paste-prompt {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const input = document.getElementById("testMessage");
+    const wrapper = input.parentElement;
+
+    function updateMessageAppearance() {
+      wrapper.classList.toggle(
+        "has-content",
+        input.value.length > 0
+      );
+    }
+
+    input.addEventListener("input", updateMessageAppearance);
+    window.addEventListener("pageshow", updateMessageAppearance);
+    updateMessageAppearance();
+  })();
+</script>
+        </aside>
+        <main class="dashboard-main">
+            <div class="page-title">
+                <h1>400 KV DAILY CONSUMPTION</h1>
+                <form class="date-section"><label for="reportDate">Date</label><input id="reportDate" type="date" />
+                </form>
+            </div>
+            <div class="daily-source-controls"><button id="loadEnergyDaily" type="button" disabled>Reload Energy
+                    MU</button><span id="dailyEnergyStatus" role="status">Select a date to load Energy MU.</span></div>
+            <div class="readings-grid">
+                <section class="reading-card">
+                    <h2>(1)<u>IMPORT</u></h2>
+                    <div class="reading"><label>RTPP-1 =</label><input id="rtpp1" step="0.001" type="number" />MU</div>
+                    <div class="reading"><label>RTPP-2 =</label><input id="rtpp2" step="0.001" type="number" />MU</div>
+                    <div class="reading"><label>Chittoor-1 =</label><input id="chittoor1" step="0.001"
+                            type="number" />MU</div>
+                    <div class="reading"><label>Chittoor-2 =</label><input id="chittoor2" step="0.001"
+                            type="number" />MU</div>
+                    <div class="reading"><label>400KV IMPORT =</label><input id="import400" step="0.001"
+                            type="number" />MU</div>
+                    <div class="reading"><label>ICT IMPORT =</label><input id="importict" step="0.001"
+                            type="number" />MU</div>
+                    <div class="reading"><label>TOTAL IMPORT =</label><input id="totalImport" step="0.001"
+                            type="number" />MU</div>
+                </section>
+                <section class="reading-card">
+                    <h2>(2)<u>EXPORT</u></h2>
+                    <div class="reading"><label>RTPP-1 =</label><input id="rtpp1export" step="0.001" type="number" />MU
+                    </div>
+                    <div class="reading"><label>RTPP-2 =</label><input id="rtpp2export" step="0.001" type="number" />MU
+                    </div>
+                    <div class="reading"><label>Chittoor-1 =</label><input id="chittoor1export" step="0.001"
+                            type="number" />MU</div>
+                    <div class="reading"><label>Chittoor-2 =</label><input id="chittoor2export" step="0.001"
+                            type="number" />MU</div>
+                    <div class="reading"><label>400KV EXPORT =</label><input id="export400" step="0.001"
+                            type="number" />MU</div>
+                    <div class="reading"><label>ICT EXPORT =</label><input id="exportict" step="0.001"
+                            type="number" />MU</div>
+                    <div class="reading"><label>TOTAL EXPORT =</label><input id="totalexport" step="0.001"
+                            type="number" />MU</div>
+                </section>
+                <section class="reading-card">
+                    <h2>(3)MD on ICT =<input id="mdict" step="0.001" type="number" />MW @<input id="mdictime"
+                            type="time" />Hrs</h2>
+                    <div class="reading"><label>MD on ICT -1 =</label><input id="mdict1" step="0.001" type="number" />MW
+                        @<input id="mdict1time" type="time" />Hrs</div>
+                    <div class="reading"><label>MD on ICT -2 =</label><input id="mdict2" step="0.001" type="number" />MW
+                        @<input id="mdict2time" type="time" />Hrs</div><br />
+                </section>
+                <section class="reading-card">
+                    <h2>(4)Total Generation Units=<input id="totalgeneration" step="0.001" type="number" />MU</h2>
+                </section>
+                <section class="reading-card">
+                    <h2>(5)<u>400 KV Bus Voltages:</u></h2>
+                    <div class="reading"><label>Maximum =</label><input id="maxvoltage" step="0.001" type="number" />KV
+                        @<input id="maxvoltagetime" type="time" />Hrs</div>
+                    <div class="reading"><label>Minimum =</label><input id="minvoltage" step="0.001" type="number" />KV
+                        @<input id="minvoltagetime" type="time" />Hrs</div>
+                </section>
+                <section class="reading-card">
+                    <h2>(6)400 KV Bus Reactor =<input id="busreactor" type="text" /></h2>
+                </section>
+                <section class="reading-card">
+                    <h2>(7) Interruptions=</h2>
+                    <div class="reading"><textarea id="Interruptions">Nil</textarea></div>
+                </section>
+            </div>
+            <section class="report-actions"><label for="reportName">Name:</label><input id="reportName"
+                    placeholder="Enter your name" type="text" />
+                <div id="reportOutput" style="white-space:pre-wrap;margin:15px 0;"></div>
+                <p id="status">Status : In Service</p><button id="changeStatus" type="button">Change Status</button>
+            </section>
+        </main>
+    </div>
+    <div id="dailySaveBar">
+        <div class="daily-save-details"><strong id="dailySaveTitle"></strong><span id="dailySaveStatus" role="status"
+                aria-live="polite">Select a date.</span></div>
+        <div class="daily-save-actions"><button id="saveDaily" type="button" disabled>Save Readings</button><button
+                id="printDaily" type="button" disabled>Print / PDF</button><button id="excelDaily" type="button"
+                disabled>Excel</button><button id="wordDaily" type="button" disabled>Word</button><button
+                id="shareWhatsApp" type="button" disabled>WhatsApp Share</button></div>
+    </div>
+    <dialog id="dailyUnsavedDialog" aria-labelledby="dailyUnsavedTitle" aria-describedby="dailyUnsavedMessage">
+        <h2 id="dailyUnsavedTitle">Unsaved readings</h2>
+        <p id="dailyUnsavedMessage" role="status">You have unsaved readings. Save before leaving?</p>
+        <div class="daily-unsaved-actions"><button id="dailySaveContinue" type="button">Save &amp;
+                Continue</button><button id="dailyStayHere" type="button" autofocus>Stay Here</button><button
+                id="dailyDiscardContinue" type="button">Discard &amp; Continue</button></div>
+    </dialog>
+    <script>document.getElementById("loggedInEmail").addEventListener("click", function (event) { const email = this.textContent.trim(); if (!email.includes("@")) { event.preventDefault(); return; } this.href = "mailto:" + email; });</script>
+    <script>
+        (() => {
+            const currentFile = decodeURIComponent(window.location.pathname.split("/").pop());
+            const activeFile = currentFile === "monthly-register.html" ? "monthly-energy.html" : currentFile;
+            document.querySelectorAll(".main-nav a").forEach(link => {
+                const targetFile = decodeURIComponent(new URL(link.href).pathname.split("/").pop());
+                const active = targetFile === activeFile;
+                link.classList.toggle("active", active);
+                if (active) link.setAttribute("aria-current", "page");
+                else link.removeAttribute("aria-current");
+            });
+        })();
+    </script>
+    <script type="module" src="compact-save-bar.js"></script>
+    <script type="module" src="calendar-save-status.js"></script>
+</body>
+
 </html>

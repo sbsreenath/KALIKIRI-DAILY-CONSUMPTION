@@ -1,0 +1,801 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: #18354f;
+  font-family: Arial, sans-serif;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* HEADER */
+.monthly-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 28px;
+  background: #153b65;
+  border-bottom: 4px solid #dfb54f;
+}
+
+.monthly-header img {
+  width: 80px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.monthly-header h1 {
+  margin: 0;
+  color: #ffe3a3;
+  font-size: clamp(20px, 3vw, 28px);
+}
+
+.monthly-header p {
+  margin: 8px 0 0;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* NAVIGATION */
+.monthly-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 28px;
+  background: #ffffff;
+  border-bottom: 1px solid #ced9e3;
+}
+
+.monthly-nav a {
+  padding: 10px 16px;
+  border-radius: 8px;
+  color: #153b65;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.monthly-nav a:hover {
+  background: #18794e;
+  color: #ffffff;
+}
+
+main {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* MONTH SELECTION */
+.register-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.register-controls label {
+  font-weight: 700;
+}
+
+input[type="month"] {
+  padding: 10px 12px;
+  border: 1px solid #9bb3c8;
+  border-radius: 8px;
+  font: inherit;
+  background: #ffffff;
+}
+
+/* FEEDER BUTTONS */
+.feeder-selection,
+#registerPanel {
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #b9ccdc;
+  border-radius: 12px;
+}
+
+.feeder-selection h2 {
+  margin: 20px 0 12px;
+  font-size: 18px;
+}
+
+.feeder-selection h2:first-child {
+  margin-top: 0;
+}
+
+.feeder-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+button {
+  padding: 11px 18px;
+  border: 1px solid #153b65;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #153b65;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+
+button:hover:not(:disabled) {
+  background: #18794e;
+  border-color: #18794e;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.feeder-buttons button.active {
+  background: #153b65;
+  color: #ffffff;
+}
+
+button:disabled {
+  background: #e8edf2;
+  border-color: #c7d1db;
+  color: #778593;
+  cursor: not-allowed;
+}
+
+/* STATUS AND FORMULAS */
+#registerStatus {
+  padding: 12px 16px;
+  border-left: 4px solid #287aaf;
+  background: #eaf3fa;
+  line-height: 1.5;
+}
+
+#formulaBox {
+  margin-bottom: 20px;
+  padding: 14px;
+  background: #f0f7f3;
+  border: 1px solid #bdd8c8;
+  border-radius: 8px;
+  line-height: 1.6;
+}
+
+/* OPENING READINGS */
+#openingReadings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+#openingReadings label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+#openingReadings input,
+#monthlyTable input {
+  width: 100%;
+  min-width: 100px;
+  padding: 8px;
+  border: 1px solid #aabccc;
+  border-radius: 6px;
+  background: #fffaf0;
+  color: #18354f;
+  font: inherit;
+}
+
+input:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #dfb54f;
+  outline-offset: 2px;
+}
+
+/* REGISTER TABLE */
+.table-scroll {
+  overflow-x: auto;
+}
+
+#monthlyTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+#monthlyTable caption {
+  padding: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: left;
+}
+
+#monthlyTable th,
+#monthlyTable td {
+  padding: 9px;
+  border: 1px solid #c4d2de;
+  text-align: center;
+  white-space: nowrap;
+}
+
+#monthlyTable thead th {
+  background: #153b65;
+  color: #ffffff;
+}
+
+#monthlyTable tbody tr:nth-child(even) {
+  background: #f3f7fb;
+}
+
+#monthlyTable tfoot {
+  background: #e7f1eb;
+  font-weight: 700;
+}
+
+/* SUMMARY AND ACTIONS */
+#monthlySummary {
+  margin-top: 18px;
+  line-height: 1.6;
+}
+
+.register-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.register-actions button:not(:disabled) {
+  background: #153b65;
+  color: #ffffff;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .monthly-header {
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .monthly-header img {
+    width: 60px;
+  }
+
+  main {
+    padding: 14px;
+  }
+
+  .monthly-nav {
+    padding: 10px;
+  }
+
+  .feeder-selection,
+  #registerPanel {
+    padding: 14px;
+  }
+}
+
+/* PRINT */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .monthly-nav,
+  .feeder-selection,
+  .register-controls,
+  .register-actions,
+  #registerStatus {
+    display: none;
+  }
+
+  main,
+  #registerPanel {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .table-scroll {
+    overflow: visible;
+  }
+
+  #monthlyTable {
+    font-size: 8px;
+  }
+
+  #monthlyTable th,
+  #monthlyTable td {
+    padding: 4px 2px;
+    white-space: normal;
+  }
+
+  #monthlyTable thead {
+    display: table-header-group;
+  }
+
+  #monthlyTable tr {
+    break-inside: avoid;
+  }
+}
+/* END-WISE HEADER COLOURS */
+#monthlyTable thead th.end-first {
+  background: #dceeff;
+  color: #143d63;
+}
+
+#monthlyTable thead th.end-second {
+  background: #ffe7b3;
+  color: #624510;
+}
+
+/* KALIKIRI END / HV SIDE — SIX COLUMNS */
+#monthlyTable tbody tr > :nth-child(n+2):nth-child(-n+7) {
+  background: #f0f7ff;
+}
+
+/* OTHER END / LV SIDE — SIX COLUMNS */
+#monthlyTable tbody tr > :nth-child(n+8):nth-child(-n+13) {
+  background: #fff8e8;
+}
+
+/* LOSS COLUMNS */
+#monthlyTable tbody tr > :nth-child(n+14) {
+  background: #edf7ef;
+  color: #205536;
+}
+
+/* CLEAR DIVIDERS BETWEEN GROUPS */
+#monthlyTable tbody tr > :nth-child(8),
+#monthlyTable tbody tr > :nth-child(14) {
+  border-left: 3px solid #8a9caf;
+}
+
+#monthlyTable thead th {
+  text-align: center;
+}
+
+#monthlyTable tbody input {
+  background: #ffffff;
+  color: #18354f;
+}
+/* CONSOLIDATED REPORT */
+#consolidatedReport {
+  margin-top: 24px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #b9ccdc;
+  border-radius: 12px;
+  scroll-margin-top: 20px;
+}
+
+#consolidatedReport > h2 {
+  margin-top: 0;
+}
+
+#consolidatedDate {
+  padding: 10px 12px;
+  border: 1px solid #9bb3c8;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #18354f;
+  font: inherit;
+}
+
+#viewConsolidated {
+  background: #153b65;
+  color: #ffffff;
+}
+
+#consolidatedStatus {
+  padding: 12px 16px;
+  border-left: 4px solid #287aaf;
+  background: #eaf3fa;
+  line-height: 1.5;
+}
+
+.consolidated-heading {
+  margin: 24px 0;
+  text-align: center;
+}
+
+.consolidated-heading h2 {
+  margin: 0 0 8px;
+}
+
+.consolidated-heading h3 {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+#consolidatedReportDate {
+  color: #946600;
+  white-space: nowrap;
+}
+
+.consolidated-table-wrap {
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.consolidated-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.consolidated-table caption {
+  padding: 12px;
+  background: #153b65;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.consolidated-table th,
+.consolidated-table td {
+  padding: 9px 7px;
+  border: 1px solid #c4d2de;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.consolidated-table thead th {
+  background: #eaf1f8;
+  color: #153b65;
+}
+
+.consolidated-table .end-first {
+  background: #f0f7ff;
+}
+
+.consolidated-table .end-second {
+  background: #fff8e8;
+}
+
+.consolidated-table .loss-column {
+  background: #edf7ef;
+}
+
+.consolidated-table .feeder-name {
+  text-align: left;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  #consolidatedReport {
+    padding: 14px;
+  }
+
+  .consolidated-heading h3 {
+    font-size: 15px;
+  }
+}
+/* MONTH CALENDAR AND FEEDER LAYOUT */
+.monthly-page-heading {
+  margin: 0 0 20px;
+  color: #153b65;
+  font-size: clamp(22px, 3vw, 30px);
+}
+
+#monthlyCalendarLayout {
+  display: grid;
+  grid-template-columns: 330px minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
+}
+
+.monthly-calendar-card {
+  min-width: 0;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #c5d7e6;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px #153b650d;
+}
+
+.monthly-calendar-year {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #153b65;
+}
+
+.monthly-calendar-year h2 {
+  margin: 0;
+  color: #ffe18b;
+  font-size: 30px;
+}
+
+.monthly-calendar-year button {
+  padding: 2px 12px;
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff55;
+  font-size: 26px;
+}
+
+#monthlyCalendarClock {
+  margin: 0;
+  padding: 10px 8px;
+  background: #edf4fb;
+  color: #153b65;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+#monthlyCalendarScroll {
+  height: 660px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #819bb1 #edf4fb;
+}
+
+.monthly-calendar-month {
+  height: 220px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #d7e2ec;
+}
+
+.monthly-calendar-month-title {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 6px 4px;
+  border: 0;
+  border-radius: 6px;
+  background: #edf4fb;
+  color: #153b65;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.monthly-calendar-month.selected
+.monthly-calendar-month-title {
+  background: #153b65;
+  color: #ffe18b;
+}
+
+.monthly-calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-auto-rows: 23px;
+  gap: 1px;
+  text-align: center;
+}
+
+.monthly-calendar-weekday {
+  color: #62778a;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.monthly-calendar-day {
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #18354f;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.monthly-calendar-day.today {
+  background: #dfb54f;
+  color: #153b65;
+  font-weight: 700;
+}
+
+.monthly-calendar-month.future {
+  background: #f5f6f8;
+}
+
+.monthly-calendar-month.future button:disabled {
+  background: transparent;
+  color: #a5afb8;
+  border: 0;
+}
+
+.monthly-calendar-note {
+  margin: 0;
+  padding: 10px;
+  background: #edf4fb;
+  color: #62778a;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.monthly-feeder-area {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+
+.monthly-selected-banner {
+  padding: 16px;
+  border: 1px solid #c5d7e6;
+  border-radius: 10px;
+  background: #eaf2fa;
+  color: #153b65;
+  text-align: center;
+  line-height: 1.6;
+  font-weight: 700;
+}
+
+#calendarSelectedMonth {
+  margin-left: 8px;
+  color: #946600;
+}
+
+.monthly-feeder-box {
+  padding: 28px 22px;
+  background: #ffffff;
+  border: 1px solid #c5d7e6;
+  border-top: 5px solid #dfb54f;
+  border-radius: 12px;
+}
+
+.monthly-feeder-box h2 {
+  margin: 0 0 28px;
+  color: #153b65;
+  text-align: center;
+  font-size: clamp(20px, 2vw, 27px);
+}
+
+.monthly-feeder-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.monthly-feeder-grid button {
+  min-height: 56px;
+  padding: 10px 6px;
+  border: 2px solid #153b65;
+  border-radius: 8px;
+  color: #153b65;
+  overflow-wrap: anywhere;
+}
+
+.monthly-ict-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 70%;
+  margin: auto;
+}
+
+@media (max-width: 1000px) {
+  #monthlyCalendarLayout {
+    grid-template-columns: 290px minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .monthly-feeder-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .monthly-ict-grid {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  #monthlyCalendarLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .monthly-feeder-box {
+    padding: 22px 16px;
+  }
+}
+
+@media print {
+  #monthlyCalendarLayout,
+  .monthly-page-heading {
+    display: none;
+  }
+}
+/* RUNNING MONTH — GOLD BORDER AND GENTLE MOVEMENT */
+#monthlyCalendarMonths .monthly-calendar-month.running-month {
+  position: relative;
+  z-index: 1;
+  border: 2px solid #dfb54f;
+  border-radius: 12px;
+  background: #fffdf5;
+  transform-origin: center;
+  animation: runningMonthGlow 4s ease-in-out infinite;
+}
+
+@keyframes runningMonthGlow {
+  0%, 100% {
+    transform: scale(0.98);
+    box-shadow: 0 2px 6px #b58a2420;
+  }
+
+  50% {
+    transform: scale(1);
+    box-shadow:
+      0 4px 12px #b58a2438,
+      inset 0 0 8px #dfb54f18;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #monthlyCalendarMonths .monthly-calendar-month.running-month {
+    animation: none;
+    transform: none;
+  }
+}
+#monthlyCalendarMonths .monthly-calendar-month.running-month {
+  border: 4px solid #d4a017;
+  border-radius: 12px;
+  background: #fffdf5;
+}
+/* GOLD HIGHLIGHT — REPORT BUTTONS AND FEEDER TABS */
+.register-actions button:hover:not(:disabled),
+.register-actions button:focus-visible:not(:disabled),
+.register-actions button:active:not(:disabled),
+.monthly-feeder-grid button:hover:not(:disabled),
+.monthly-feeder-grid button:focus-visible:not(:disabled),
+.monthly-feeder-grid button:active:not(:disabled),
+.feeder-buttons button:hover:not(:disabled),
+.feeder-buttons button:focus-visible:not(:disabled),
+.feeder-buttons button:active:not(:disabled) {
+  background: #dfb54f;
+  color: #102e50;
+  border-color: #b58a24;
+  box-shadow: 0 3px 9px #b58a2440;
+}
+#viewConsolidated:hover:not(:disabled),
+#viewConsolidated:focus-visible:not(:disabled),
+#viewConsolidated:active:not(:disabled) {
+  background: #dfb54f;
+  color: #102e50;
+  border-color: #b58a24;
+  box-shadow: 0 3px 9px #b58a2440;
+}
+#consolidatedDate {
+  width: 230px;
+  min-width: 230px;
+  max-width: 100%;
+  padding: 12px;
+  font-size: 17px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+@media (max-width: 400px) {
+  #consolidatedDate {
+    width: 100%;
+    min-width: 0;
+  }
+}
+/* REMOVE NUMBER INPUT ARROWS */
+
+#registerPanel input[type="number"]::-webkit-inner-spin-button,
+#registerPanel input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#registerPanel input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}

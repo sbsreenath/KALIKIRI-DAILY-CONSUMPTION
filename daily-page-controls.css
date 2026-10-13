@@ -1,0 +1,27 @@
+/* DAILY CONSUMPTION ACTIONS ONLY */
+body.daily-consumption-page {padding-bottom:var(--daily-save-space,170px);}
+.daily-consumption-page .daily-source-controls {display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:12px 0 20px;}
+#dailyEnergyStatus {flex:1;min-width:180px;line-height:1.5;color:#194f85;font-size:14px;}
+#loadEnergyDaily {padding:10px 16px;min-height:44px;border:1px solid #194f85;border-radius:8px;background:#194f85;color:#fff;font:inherit;cursor:pointer;}
+.daily-consumption-page #dailySaveBar {position:fixed;bottom:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 20px;padding:12px 20px;padding-bottom:calc(12px + env(safe-area-inset-bottom));background:#fff1f5;border-top:3px solid #dfb54f;box-shadow:0 -4px 18px #102c541f;}
+.daily-save-details {flex:1 1 260px;min-width:0;}
+#dailySaveTitle {display:block;color:#102c54;font-size:15px;}
+#dailySaveStatus {display:block;margin-top:5px;color:#31516d;font-size:13px;overflow-wrap:anywhere;}
+#dailySaveBar[data-dirty="true"] #dailySaveStatus {color:#865916;}
+.daily-save-actions {display:flex;flex-wrap:wrap;gap:8px;}
+.daily-consumption-page .daily-save-actions button {min-height:44px;padding:10px 14px;background:#194f85;color:#fff;border:1px solid #194f85;border-radius:8px;font:inherit;font-size:14px;cursor:pointer;}
+.daily-consumption-page .daily-save-actions button:not(:disabled):hover,#loadEnergyDaily:not(:disabled):hover {background:#dfb54f;color:#102c54;border-color:#b58a24;}
+.daily-consumption-page .daily-save-actions button:disabled,#loadEnergyDaily:disabled {background:#e8edf2;color:#778593;border-color:#c7d1db;cursor:not-allowed;}
+.daily-consumption-page #dailyUnsavedDialog {width:min(480px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow-y:auto;margin:auto;padding:24px;border:2px solid #cba8b6;border-radius:14px;background:#fff9fb;color:#102c54;}
+#dailyUnsavedDialog::backdrop {background:#102c5466;}
+#dailyUnsavedDialog h2 {margin:0 0 12px;font-size:22px;}
+#dailyUnsavedMessage {line-height:1.5;}
+.daily-unsaved-actions {display:flex;flex-direction:column;gap:10px;margin-top:18px;}
+.daily-unsaved-actions button {min-height:44px;padding:12px;border:1px solid #194f85;border-radius:8px;background:#fff;color:#102c54;font:inherit;cursor:pointer;}
+#dailySaveContinue {background:#194f85;color:#fff;}
+#dailyDiscardContinue {color:#9b3434;border-color:#c69898;}
+.daily-unsaved-actions button:disabled {background:#e8edf2;color:#778593;cursor:not-allowed;}
+.daily-consumption-page #reportDate {width:240px;min-width:220px;max-width:100%;padding:12px;font-size:16px;box-sizing:border-box;}
+.daily-consumption-page .dashboard-main input,.daily-consumption-page .dashboard-main textarea {scroll-margin-bottom:var(--daily-save-space,170px);}
+@media(max-width:600px){.daily-consumption-page #dailySaveBar {padding:10px 12px;padding-bottom:calc(10px + env(safe-area-inset-bottom));gap:8px;}.daily-save-details {flex-basis:100%;}.daily-save-actions {width:100%;}.daily-save-actions button {flex:1 1 auto;}.daily-consumption-page #reportDate {min-width:0;width:100%;}}
+@media print {body.daily-consumption-page{padding-bottom:0;}#dailySaveBar,#dailyUnsavedDialog,.daily-source-controls{display:none!important;}}

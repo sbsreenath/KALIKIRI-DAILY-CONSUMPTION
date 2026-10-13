@@ -1,0 +1,62 @@
+/* ENERGY PAGE CONTROLS ONLY */
+body.energy-meter-page { padding-bottom: var(--energy-save-space,170px); }
+.energy-page .energy-date-picker {
+    display:flex; align-items:center; flex-wrap:wrap; gap:14px;
+    padding:14px 16px; margin:14px 0;
+    background:#fff1f5; border:1px solid #cba8b6; border-radius:10px;
+}
+.energy-page .energy-date-picker label { font-weight:700; color:#102c54; }
+.energy-page #energyDate {
+    width:240px; min-width:220px; max-width:100%; flex:0 0 auto;
+    margin:0; padding:12px 14px; background:#fff9fb;
+    border:1px solid #cba8b6; border-radius:8px;
+    color:#102c54; font:inherit; font-size:16px; box-sizing:border-box;
+}
+.energy-page #energyFullDate { color:#194f85; font-size:16px; }
+.energy-page .energy-section h2 {
+    text-align:center; text-transform:uppercase;
+    font-size:20px; padding:16px 18px; letter-spacing:.4px;
+}
+.energy-page input[type="number"]::-webkit-inner-spin-button,
+.energy-page input[type="number"]::-webkit-outer-spin-button { -webkit-appearance:none; margin:0; }
+.energy-page input[type="number"] { -moz-appearance:textfield; appearance:textfield; scroll-margin-bottom:var(--energy-save-space,170px); }
+.energy-meter-page #energySaveBar {
+    position:fixed; bottom:0; left:0; right:0; z-index:1000;
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:12px 20px; padding:12px 20px;
+    padding-bottom:calc(12px + env(safe-area-inset-bottom));
+    background:#fff1f5; border-top:3px solid #dfb54f;
+    box-shadow:0 -4px 18px #102c541f;
+}
+.energy-save-details { flex:1 1 280px; min-width:0; }
+#energySaveTitle { display:block; color:#102c54; font-size:15px; }
+#energySaveStatus { display:block; margin-top:5px; color:#31516d; font-size:13px; overflow-wrap:anywhere; }
+#energySaveBar[data-dirty="true"] #energySaveStatus { color:#865916; }
+.energy-meter-page #energySaveBar .energy-actions { margin:0; gap:8px; display:flex; flex-wrap:wrap; }
+.energy-meter-page #energySaveBar .energy-actions button { min-height:44px; padding:10px 14px; font-size:14px; }
+.energy-meter-page #energyUnsavedDialog {
+    width:min(480px,calc(100vw - 32px)); max-height:calc(100dvh - 32px);
+    overflow-y:auto; margin:auto; padding:24px;
+    border:2px solid #cba8b6; border-radius:14px;
+    background:#fff9fb; color:#102c54;
+}
+#energyUnsavedDialog::backdrop { background:#102c5466; }
+#energyUnsavedDialog h2 { margin:0 0 12px; font-size:22px; }
+#energyUnsavedMessage { line-height:1.5; }
+.energy-unsaved-actions { display:flex; flex-direction:column; gap:10px; margin-top:18px; }
+.energy-unsaved-actions button { width:100%; min-height:44px; border:1px solid #194f85; border-radius:8px; padding:12px; font:inherit; cursor:pointer; background:white; color:#102c54; }
+#energySaveContinue { background:#194f85; color:white; }
+#energyDiscardContinue { color:#9b3434; border-color:#c69898; }
+.energy-unsaved-actions button:hover:not(:disabled) { background:#dfb54f; color:#102c54; }
+.energy-unsaved-actions button:disabled { background:#e8edf2; color:#778593; cursor:not-allowed; }
+@media(max-width:600px) {
+    .energy-page #energyDate { flex:1; min-width:0; width:100%; }
+    .energy-meter-page #energySaveBar { padding:10px 12px; gap:8px; padding-bottom:calc(10px + env(safe-area-inset-bottom)); }
+    .energy-meter-page #energySaveBar .energy-actions { width:100%; }
+    .energy-meter-page #energySaveBar .energy-actions button { flex:1 1 auto; padding:8px 10px; }
+    .energy-save-details { flex-basis:100%; }
+}
+@media print {
+    body.energy-meter-page { padding-bottom:0; }
+    #energySaveBar, #energyUnsavedDialog { display:none !important; }
+}

@@ -189,6 +189,261 @@
             padding-right: 18px;
         }
     }
+/* WELCOME SCREEN */
+#loginWelcome {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #12375c;
+  text-align: center;
+}
+
+#loginWelcome[hidden] {
+  display: none;
+}
+
+#loginWelcome .welcome-symbol {
+  display: block;
+  margin-bottom: 18px;
+  font-size: 64px;
+}
+
+#loginWelcome h2 {
+  margin: 0;
+  color: #ffe3a3;
+  font-size: clamp(24px, 5vw, 36px);
+  line-height: 1.5;
+}
+/* GREEN SCROLLING MESSAGE */
+.login-energy-scroll {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  margin: 10px 0 14px;
+  padding: 6px 0;
+}
+
+.login-energy-scroll > .login-energy-track {
+  display: block;
+  width: max-content;
+  padding-left: 100%;
+  white-space: nowrap;
+  color: #18794e;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 26px;
+  animation: login-green-scroll 16s linear infinite;
+}
+
+@keyframes login-green-scroll {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* MOVING LEAF */
+.login-energy-track .login-leaf {
+  display: inline-block;
+  transform-origin: bottom center;
+  animation: login-leaf-sway 2s ease-in-out infinite;
+}
+
+@keyframes login-leaf-sway {
+  0%, 100% {
+    transform: rotate(-12deg);
+  }
+  50% {
+    transform: rotate(12deg);
+  }
+}
+
+/* MOVING LIGHTNING */
+.login-energy-track .login-bolt {
+  display: inline-block;
+  animation: login-bolt-move 2s ease-in-out infinite;
+}
+
+@keyframes login-bolt-move {
+  0%, 100% {
+    transform: translateX(-3px) rotate(-8deg);
+  }
+  50% {
+    transform: translateX(3px) rotate(8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-energy-scroll > .login-energy-track {
+    animation: none;
+    width: auto;
+    padding-left: 0;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .login-energy-track .login-leaf,
+  .login-energy-track .login-bolt {
+    animation: none;
+  }
+}
+/* ENERGY SLOGAN: SIZE, COLOUR AND GLOW */
+.login-energy-fixed {
+  margin: 14px 0;
+  color: #164d75;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+  animation: login-slogan-shine 3s ease-in-out infinite;
+}
+
+@keyframes login-slogan-shine {
+  0%, 100% {
+    transform: scale(1);
+    color: #164d75;
+    text-shadow: 0 0 2px rgba(22, 77, 117, 0.2);
+  }
+
+  50% {
+    transform: scale(1.06);
+    color: #946600;
+    text-shadow:
+      0 0 5px rgba(223, 181, 79, 0.6),
+      0 0 9px rgba(223, 181, 79, 0.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-energy-fixed {
+    animation: none;
+    transform: none;
+    text-shadow: none;
+  }
+}
+/* TWO LOGO HALVES JOIN TOGETHER */
+#loginWelcome .welcome-tower {
+  position: relative;
+  width: 150px;
+  aspect-ratio: 1376 / 1584;
+  margin: 0 auto 24px;
+}
+
+#loginWelcome .tower-half {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  margin: 0;
+  filter: drop-shadow(0 0 7px #ffd65a);
+}
+
+#loginWelcome .tower-half-left {
+  clip-path: inset(0 50% 0 0);
+  animation: welcome-join-left 1s ease-out both;
+}
+
+#loginWelcome .tower-half-right {
+  clip-path: inset(0 0 0 50%);
+  animation: welcome-join-right 1s ease-out both;
+}
+
+@keyframes welcome-join-left {
+  from {
+    transform: translateX(-65px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes welcome-join-right {
+  from {
+    transform: translateX(65px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* CURRENT SHINE AFTER JOINING */
+#loginWelcome .welcome-current {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  -webkit-mask: url("aptransco-logo.png") center / contain no-repeat;
+  mask: url("aptransco-logo.png") center / contain no-repeat;
+
+  background: linear-gradient(
+  to bottom,
+  transparent 35%,
+  #ffd65a 48%,
+  #fff4c2 50%,
+  #ffd65a 52%,
+  transparent 65%
+);
+  background-size: 100% 300%;
+  background-repeat: no-repeat;
+
+  animation: welcome-current-flow 2s linear 1s infinite both;
+}
+
+@keyframes welcome-current-flow {
+  from {
+    background-position: center 100%;
+    opacity: 0.8;
+  }
+  to {
+    background-position: center 0%;
+    opacity: 0.8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #loginWelcome .tower-half {
+    animation: none;
+  }
+
+  #loginWelcome .welcome-current {
+    display: none;
+  }
+}
+body {
+  background: #fff1f5;
+}
+
+.login-card {
+  background: #ffffff;
+}
+
+#loginBtn {
+  background: #f0d58e;
+  color: #102c54;
+  border: 1px solid #b58a24;
+  box-shadow: 0 3px 10px #b58a2425;
+}
+
+#loginBtn:hover {
+  background: #dfb54f;
+  color: #102c54;
+}
+
+#loginBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 </style>
 </head>
 
@@ -203,11 +458,17 @@
                 class="logo"
             >
 
-            <p class="slogan">
-                ENERGY SAVED IS ENERGY<br>
-                GENERATED
-            </p>
+            <p class="login-energy-fixed">
+  ENERGY SAVED IS ENERGY GENERATED
+</p>
 
+           <div class="login-energy-scroll">
+  <div class="login-energy-track">
+    <span class="login-leaf">🌿</span>
+    SAVE ENERGY, SAVE THE NATION
+    <span class="login-bolt">⚡</span>
+  </div>
+</div>
             <h1>400KV SUBSTATION</h1>
             <p class="station-name">KALIKIRI</p>
         </div>
@@ -270,6 +531,24 @@
     </script>
 
     <script type="module" src="login.js"></script>
+ <div id="loginWelcome" hidden role="status">
+  <div>
+    <div class="welcome-tower" role="img"
+     aria-label="Animated APTRANSCO logo">
+  <img class="tower-half tower-half-left"
+       src="aptransco-logo.png" alt="">
+
+  <img class="tower-half tower-half-right"
+       src="aptransco-logo.png" alt="">
+
+  <div class="welcome-current" aria-hidden="true"></div>
+</div>
+    <h2>
+      WELCOME TO<br>
+      APTRANSCO KALIKIRI
+    </h2>
+  </div>
+</div>
 
 </body>
 </html>

@@ -1,0 +1,470 @@
+/* Energy Meter page styles only */
+
+.energy-page {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.energy-page h1 {
+    margin-bottom: 18px;
+}
+
+#energyMessage {
+    padding: 12px 16px;
+    background: #edf4fc;
+    border-left: 4px solid #174c89;
+    border-radius: 6px;
+    color: #102c54;
+    line-height: 1.5;
+}
+
+.energy-section {
+    margin: 20px 0;
+    background: white;
+    border: 2px solid #9bb5d4;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(16, 44, 84, 0.08);
+}
+
+.energy-section h2 {
+    margin: 0;
+    padding: 14px 18px;
+    background: #edf4fc;
+    color: #102c54;
+    font-size: 18px;
+    border-bottom: 1px solid #9bb5d4;
+}
+
+.energy-table-scroll {
+    overflow-x: auto;
+}
+
+.energy-table {
+    width: 100%;
+    min-width: 950px;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.energy-table th,
+.energy-table td {
+    padding: 10px;
+    border: 1px solid #d6dfeb;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.energy-table thead th {
+    background: #102c54;
+    color: white;
+    white-space: nowrap;
+}
+
+.energy-table tbody th {
+    text-align: left;
+    color: #102c54;
+    white-space: nowrap;
+}
+
+.energy-table tbody tr:nth-child(even) {
+    background: #f7f9fc;
+}
+
+.energy-table input {
+    width: 140px;
+    max-width: 100%;
+    margin: 0;
+    padding: 9px;
+    border: 1px solid #9bb5d4;
+    border-radius: 6px;
+    font-size: 15px;
+    background: white;
+    box-sizing: border-box;
+}
+
+.energy-table .energy-start {
+    background: #fff7df;
+}
+
+.energy-difference,
+.energy-kwh,
+.energy-mu {
+    font-weight: bold;
+    color: #174c89;
+    white-space: nowrap;
+}
+
+.energy-table input:focus {
+    outline: 2px solid #679cdb;
+    outline-offset: 1px;
+}
+
+.energy-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.energy-actions button {
+    padding: 12px 22px;
+    min-height: 44px;
+    border: 1px solid #174c89;
+    border-radius: 7px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#saveEnergy {
+    background: #174c89;
+    color: white;
+}
+
+#printEnergy {
+    background: white;
+    color: #174c89;
+}
+
+.energy-actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media screen and (max-width: 600px) {
+    .energy-page {
+        padding: 16px !important;
+    }
+
+    .energy-page h1 {
+        font-size: 21px;
+    }
+
+    .energy-section h2 {
+        font-size: 17px;
+    }
+
+    .energy-table input {
+        font-size: 16px;
+    }
+
+    .energy-actions button {
+        flex: 1;
+    }
+}
+/* Separate border around each meter's Import / Export pair */
+.energy-table tbody tr {
+    --meter-border: #6394c5;
+}
+
+.energy-table tbody tr:nth-child(8n + 3),
+.energy-table tbody tr:nth-child(8n + 4) {
+    --meter-border: #609d86;
+}
+
+.energy-table tbody tr:nth-child(8n + 5),
+.energy-table tbody tr:nth-child(8n + 6) {
+    --meter-border: #a084b8;
+}
+
+.energy-table tbody tr:nth-child(8n + 7),
+.energy-table tbody tr:nth-child(8n + 8) {
+    --meter-border: #c49460;
+}
+
+/* Top edge of each pair */
+.energy-table tbody tr:nth-child(odd) > * {
+    border-top: 2px solid var(--meter-border);
+}
+
+/* Bottom edge of each pair */
+.energy-table tbody tr:nth-child(even) > * {
+    border-bottom: 2px solid var(--meter-border);
+}
+
+/* Merged feeder name: left and bottom edges */
+.energy-table tbody .meter-name {
+    border-left: 3px solid var(--meter-border);
+    border-bottom: 2px solid var(--meter-border);
+    background: #f0f5fb;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+}
+
+/* Right edge of both rows */
+.energy-table tbody tr > td:last-child {
+    border-right: 2px solid var(--meter-border);
+}
+/* Coloured border between Meter and Flow */
+.energy-table tbody .meter-name {
+    border-right: 2px solid var(--meter-border);
+}
+#printEnergy:not(:disabled) {
+  background: #194f85;
+  color: #ffffff;
+  border: 2px solid #194f85;
+  cursor: pointer;
+}
+
+#printEnergy:not(:disabled):hover {
+  background: #10365e;
+  border-color: #10365e;
+  box-shadow: 0 4px 12px rgba(16, 54, 94, 0.25);
+}
+
+#printEnergy:not(:disabled):focus-visible {
+  outline: 3px solid #d5a646;
+  outline-offset: 3px;
+}
+
+#printEnergy:disabled {
+  background: #e5e7eb;
+  color: #6b7280;
+  border: 2px solid #d1d5db;
+  cursor: not-allowed;
+}
+#saveEnergy,
+#printEnergy {
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+#saveEnergy:not(:disabled):hover,
+#printEnergy:not(:disabled):hover {
+  transform: scale(1.05);
+  background-color: #10365e;
+  color: #ffffff;
+  border-color: #10365e;
+  box-shadow: 0 6px 16px rgba(16, 54, 94, 0.3);
+  cursor: pointer;
+}
+
+#saveEnergy:not(:disabled):active,
+#printEnergy:not(:disabled):active {
+  transform: scale(1.02);
+}
+
+#saveEnergy:focus-visible,
+#printEnergy:focus-visible {
+  outline: 3px solid #d5a646;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #saveEnergy,
+  #printEnergy {
+    transition: none;
+    transform: none;
+  }
+}
+.energy-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.energy-actions button:not(:disabled) {
+    background: #1565a8;
+    color: #ffffff;
+    border: 1px solid #1565a8;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.energy-actions button:hover:not(:disabled) {
+    background: #18794e;
+    border-color: #18794e;
+    box-shadow: 0 3px 8px #00000025;
+}
+
+.energy-actions button:disabled {
+    background: #e8edf2;
+    color: #778593;
+    border: 1px solid #c7d1db;
+    cursor: not-allowed;
+}
+.energy-actions button:hover:not(:disabled),
+.energy-actions button:focus-visible:not(:disabled),
+.energy-actions button:active:not(:disabled) {
+    background: #dfb54f;
+    color: #102e50;
+    border-color: #b58a24;
+    box-shadow: 0 3px 9px #b58a2440;
+}
+/* HORIZONTAL ENERGY CALENDAR */
+
+.energy-page .energy-calendar {
+    display: flex;
+    align-items: stretch;
+    gap: 14px;
+    margin: 18px 0 12px;
+    padding: 12px;
+    border: 1px solid #9bb5d4;
+    border-radius: 12px;
+    background: #ffffff80;
+    box-sizing: border-box;
+}
+
+.energy-page .energy-calendar-month {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    flex: 0 0 72px;
+    border-right: 1px solid #b8c8dc;
+    padding-right: 12px;
+}
+
+.energy-page #energyCalendarMonth {
+    font-size: 21px;
+    color: #102c54;
+}
+
+.energy-page .energy-calendar-month button {
+    width: 36px;
+    height: 28px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #9bb5d4;
+    border-radius: 6px;
+    background: #102c54;
+    color: white;
+    font-size: 23px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.energy-page .energy-calendar-scroll {
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    padding: 3px;
+}
+
+.energy-page #energyCalendarDays {
+    display: grid;
+    grid-template-columns: repeat(16, minmax(38px, 1fr));
+    grid-template-rows: repeat(2, 40px);
+    gap: 7px;
+    min-width: 713px;
+}
+
+.energy-page .energy-calendar-day {
+    width: 100%;
+    min-width: 0;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #afbed2;
+    border-radius: 7px;
+    background: #f6f8fc;
+    color: #102c54;
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.energy-page .energy-calendar-day.has-readings {
+    background: #dfb54f;
+    border-color: #b58a24;
+    color: #102c54;
+}
+
+.energy-page .energy-calendar-day.is-selected {
+    outline: 3px solid #174c89;
+    outline-offset: 1px;
+}
+
+.energy-page .energy-calendar-day.is-today {
+    border-bottom: 3px solid #174c89;
+}
+
+.energy-page .energy-calendar button:not(:disabled):hover {
+    background: #194f85;
+    color: white;
+}
+
+.energy-page .energy-calendar button:focus-visible {
+    outline: 3px solid #174c89;
+    outline-offset: 2px;
+}
+
+.energy-page .energy-calendar button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.energy-page .energy-date-picker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px 0;
+}
+
+@media screen and (max-width: 600px) {
+    .energy-page .energy-calendar {
+        gap: 8px;
+        padding: 9px;
+    }
+
+    .energy-page .energy-calendar-month {
+        flex-basis: 52px;
+        padding-right: 8px;
+    }
+}
+
+@media print {
+    .energy-calendar,
+    .energy-date-picker {
+        display: none !important;
+    }
+}
+/* CALENDAR — MATCHING PINK BACKGROUND */
+
+.energy-page .energy-calendar {
+    background: #fff1f5;
+    border: 2px solid #c69aa9;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(112, 66, 85, 0.12);
+}
+
+.energy-page .energy-calendar-month {
+    border-right: 2px solid #d4afbc;
+}
+
+.energy-page #energyCalendarMonth {
+    color: #102c54;
+}
+
+.energy-page .energy-calendar-day {
+    background: #fff9fb;
+    border: 1px solid #cba8b6;
+    border-radius: 7px;
+    color: #102c54;
+    box-shadow: 0 2px 3px rgba(112, 66, 85, 0.08);
+}
+
+.energy-page .energy-calendar-day.has-readings {
+    background: #dfb54f;
+    border: 2px solid #b58a24;
+    color: #102c54;
+}
+
+.energy-page .energy-calendar-day.is-today {
+    border-bottom: 3px solid #174c89;
+}
+
+.energy-page .energy-calendar-day.is-selected {
+    outline: 3px solid #174c89;
+    outline-offset: 1px;
+}
+
+.energy-page .energy-calendar button:not(:disabled):hover {
+    background: #194f85;
+    border-color: #102c54;
+    color: white;
+}

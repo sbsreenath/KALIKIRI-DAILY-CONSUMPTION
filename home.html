@@ -12,35 +12,135 @@
 </head>
 
 <body>
-    <header class="dashboard-header">
+       <header class="dashboard-header centered-header">
         <div class="brand">
-            <img src="aptransco-logo.png"
-                 alt="APTRANSCO logo"
-                 width="80"
-                 height="80">
+            <svg class="transco-logo"
+     xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1376 1584"
+     role="img"
+     aria-label="APTRANSCO logo">
 
-            <div>
-                <strong>APTRANSCO</strong>
-                <span>400 KV SS KALIKIRI</span>
-            </div>
+  <defs>
+    <!-- Logo nundi lightning symbols separate cheyadam -->
+    <clipPath id="transcoBase">
+      <path clip-rule="evenodd"
+            d="M0 0H1376V1584H0Z
+               M920 40V250H1310V40Z
+               M0 570V770H360V570Z"/>
+    </clipPath>
+
+    <clipPath id="transcoBoltTop">
+      <rect x="920" y="40" width="390" height="210"/>
+    </clipPath>
+
+    <clipPath id="transcoBoltLeft">
+      <rect x="0" y="570" width="360" height="200"/>
+    </clipPath>
+
+    <!-- Shine tower lines meeda matrame -->
+    <mask id="transcoTowerMask"
+          maskUnits="userSpaceOnUse"
+          x="0" y="0" width="1376" height="1584"
+          style="mask-type: alpha;">
+      <image href="aptransco-logo.png"
+             width="1376" height="1584"/>
+    </mask>
+
+    <clipPath id="transcoTowerArea">
+      <rect x="0" y="0" width="1376" height="1180"/>
+    </clipPath>
+
+    <linearGradient id="transcoShine"
+                    x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#baf5ff"
+            stop-opacity="0"/>
+      <stop offset="50%" stop-color="#e8ffff"
+            stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#baf5ff"
+            stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Tower and text steady ga -->
+  <g clip-path="url(#transcoBase)">
+    <image href="aptransco-logo.png"
+           width="1376" height="1584"/>
+
+    <g clip-path="url(#transcoTowerArea)">
+      <g mask="url(#transcoTowerMask)">
+        <rect class="tower-current"
+              x="0" y="-240"
+              width="1376" height="240"
+              fill="url(#transcoShine)"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Top lightning -->
+  <g class="bolt-top">
+    <image href="aptransco-logo.png"
+           width="1376" height="1584"
+           clip-path="url(#transcoBoltTop)"/>
+  </g>
+
+  <!-- Left lightning -->
+  <g class="bolt-left">
+    <image href="aptransco-logo.png"
+           width="1376" height="1584"
+           clip-path="url(#transcoBoltLeft)"/>
+  </g>
+</svg>
+            <div class="station-heading">
+  <h1>
+    TRANSMISSION CORPORATION OF ANDHRA PRADESH LIMITED
+  </h1>
+
+  <p class="station-voltage">400 KV SUBSTATION</p>
+
+  <p class="station-location">KALIKIRI</p>
+</div>
         </div>
-    </header>
+        <div id="userAccountBox">
 
-    <nav class="main-nav" aria-label="Main navigation">
-        <a href="home.html"
-           class="active"
-           aria-current="page">
-            Home
-        </a>
+<a id="loggedInEmail" class="header-email" href="mailto:">
+  Loading account...
+</a>
+<div id="dateTimeBox">
+<p id="dateTime"></p>
+</div>
+<button id="logoutBtn" type="button">Logout</button>
+</div>
+<div class="energy-ticker"
+     aria-label="Energy conservation message">
+  <span class="energy-ticker-text">
+    ⚡ ENERGY SAVED IS ENERGY GENERATED ⚡
+    &nbsp; • &nbsp;
+    <span class="energy-leaf" aria-hidden="true">🌿</span>
+    SAVE ENERGY, SAVE THE NATION
+    <span class="energy-leaf" aria-hidden="true">🌿</span>
+  </span>
+</div>
+</header>
 
-        <a href="energy-meter.html">
-            Energy Meter Readings
-        </a>
+<nav class="main-nav" aria-label="Main navigation">
+  <a href="home.html">Home</a>
 
-        <a href="Consumption Particulars.html">
-            Daily Consumption
-        </a>
-    </nav>
+  <a href="Consumption%20Particulars.html">
+    Daily Consumption
+  </a>
+
+  <a href="energy-meter.html">
+    Energy Meter Readings
+  </a>
+
+  <a href="monthly-energy.html">
+    Monthly Energy Meter Readings
+  </a>
+
+  <a href="consolidated-report.html">
+    Consolidated Reports
+  </a>
+</nav>
 
     <main style="max-width: 1100px; margin: auto; padding: 24px;">
         <h1>KALIKIRI SUBSTATION PORTAL</h1>
@@ -75,5 +175,59 @@
             </section>
         </div>
     </main>
+<script>
+  (() => {
+    const clock = document.getElementById("dateTime");
+    if (!clock) return;
+
+    function updateHeaderClock() {
+      const now = new Date();
+
+      const date = now.toLocaleDateString("en-GB", {
+        timeZone: "Asia/Kolkata"
+      });
+
+      const time = now.toLocaleTimeString("en-US", {
+        timeZone: "Asia/Kolkata",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+      });
+
+      clock.textContent = `Date: ${date} | Time: ${time}`;
+    }
+
+    updateHeaderClock();
+    setInterval(updateHeaderClock, 1000);
+  })();
+</script>
+<script>
+  (() => {
+    const currentFile = decodeURIComponent(
+      window.location.pathname.split("/").pop()
+    );
+
+    const activeFile = currentFile === "monthly-register.html"
+      ? "monthly-energy.html"
+      : currentFile;
+
+    document.querySelectorAll(".main-nav a").forEach(link => {
+      const targetFile = decodeURIComponent(
+        new URL(link.href).pathname.split("/").pop()
+      );
+
+      const active = targetFile === activeFile;
+
+      link.classList.toggle("active", active);
+
+      if (active) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  })();
+</script>
 </body>
 </html>

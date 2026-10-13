@@ -19,7 +19,13 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
 
     try {
         await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "Consumption%20Particulars.html";
+        document.getElementById("loginWelcome").hidden = false;
+document.getElementById("loginBtn").disabled = true;
+message.textContent = "";
+
+setTimeout(function () {
+  window.location.replace("home.html");
+}, 5000);
     } catch (error) {
         message.textContent = "Login failed. Check your Email ID and Password.";
     }
