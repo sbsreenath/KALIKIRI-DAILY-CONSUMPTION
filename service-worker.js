@@ -1,6 +1,11 @@
-const CACHE_NAME = "kalikiri-daily-consumption-v1";
+const CACHE_NAME = "kalikiri-daily-consumption-quick-entry-v3";
 
 const FILES_TO_CACHE = [
+    "./shared-energy-date.js",
+    "./monthly-quick-entry.js",
+    "./monthly-quick-core.js",
+    "./monthly-quick-entry.css",
+    "./daily-input-navigation.js",
     "./",
     "./index.html",
     "./Consumption%20Particulars.html",

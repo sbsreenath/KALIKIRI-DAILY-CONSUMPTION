@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"><head>
+<script src="shared-energy-date.js"></script>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kalikiri Energy Meter Readings</title>
 <link rel="stylesheet" href="design.css"><link rel="stylesheet" href="energy-meter.css">
@@ -40,6 +41,7 @@
     <a href="consolidated-report.html">Consolidated Reports</a>
   </nav>
 <main class="energy-page" style="max-width:1400px;margin:auto;padding:24px;">
+<a class="report-back" href="home.html"><span aria-hidden="true">←</span> Back</a>
 <h1>ENERGY METER READINGS</h1>
 <section class="energy-calendar" aria-label="Energy readings calendar">
 <div class="energy-calendar-month"><button type="button" id="energyPreviousMonth" aria-label="Previous month">‹</button><strong id="energyCalendarMonth"></strong><button type="button" id="energyNextMonth" aria-label="Next month">›</button></div>
@@ -86,5 +88,7 @@
   </script>
   <script type="module" src="compact-save-bar.js"></script>
   <script type="module" src="calendar-save-status.js"></script>
+<link rel="stylesheet" href="report-actions.css">
+<script type="module" src="report-actions.js"></script>
 </body>
 </html>

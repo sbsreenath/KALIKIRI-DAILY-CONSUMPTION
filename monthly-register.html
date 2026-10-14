@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="shared-energy-date.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kalikiri Monthly Energy Register</title>
@@ -44,6 +45,7 @@
     <a href="consolidated-report.html">Consolidated Reports</a>
   </nav>
   <main>
+<a class="report-back" href="home.html"><span aria-hidden="true">←</span> Back</a>
     <div class="register-controls" id="monthlyRegisterToolbar">
       <button class="monthly-back-button" id="monthlyBackButton" type="button"><span class="monthly-back-arrows" aria-hidden="true">◀ ◀ ◀</span><span>Back to Feeder Selection</span></button>
       <div class="monthly-feeder-switch" role="group" aria-label="Select register feeder">
@@ -106,5 +108,7 @@
     })();
   </script>
   <script type="module" src="compact-save-bar.js"></script>
+<link rel="stylesheet" href="report-actions.css">
+<script type="module" src="report-actions.js"></script>
 </body>
 </html>

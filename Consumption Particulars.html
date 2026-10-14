@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+<script src="shared-energy-date.js"></script>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>400 KV SS Kalikiri Daily consumption Particulars</title>
@@ -13,6 +14,9 @@
     <script src="daily-page-controls.js" type="module"></script>
     <link href="manifest.json" rel="manifest" />
     <script>if ("serviceWorker" in navigator) { navigator.serviceWorker.register("service-worker.js"); }</script>
+    <link rel="stylesheet" href="interruptions-menu.css">
+    <script type="module" src="interruptions-menu.js"></script>
+<script type="module" src="daily-input-navigation.js"></script>
 </head>
 
 <body class="daily-consumption-page">
@@ -268,6 +272,7 @@
 </script>
         </aside>
         <main class="dashboard-main">
+<a class="report-back" href="home.html"><span aria-hidden="true">←</span> Back</a>
             <div class="page-title">
                 <h1>400 KV DAILY CONSUMPTION</h1>
                 <form class="date-section"><label for="reportDate">Date</label><input id="reportDate" type="date" />
@@ -372,6 +377,8 @@
     </script>
     <script type="module" src="compact-save-bar.js"></script>
     <script type="module" src="calendar-save-status.js"></script>
+<link rel="stylesheet" href="report-actions.css">
+<script type="module" src="report-actions.js"></script>
 </body>
 
 </html>

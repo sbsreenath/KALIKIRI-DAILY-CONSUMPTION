@@ -1,0 +1,16 @@
+MONTHLY QUICK ENTRY + DAILY ARROW NAVIGATION
+
+Upload ALL files in this folder to the existing GitHub project.
+Refresh the app after upload (Ctrl+Shift+R on the laptop).
+
+Desktop: hover over a feeder to enter selected-date closing meter readings.
+Click the feeder to open its saved monthly register.
+Phone: first tap opens quick entry; second tap opens the register.
+The popup contains Import and Export for both ends (HV/LV for ICTs).
+Date comes from the shared Energy report date.
+Values auto-save on leaving a reading box or pressing Enter.
+If saving fails, readings remain in the popup and leaving is blocked until saved.
+Calculations, differences, losses and exports stay in the complete register.
+All 10 feeder/ICT buttons support quick entry.
+Daily Consumption numeric spinners are hidden. Arrow keys move between editable boxes; calculated fields are skipped.
+Includes the previous common-date linking update.

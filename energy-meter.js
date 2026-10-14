@@ -124,6 +124,8 @@ const tablesBox = document.getElementById("energyTables");
 
 const dateInput = document.getElementById("energyDate");
 
+dateInput.value = window.energyReportDate.get();
+
 const messageBox = document.getElementById("energyMessage");
 
 /* CREATE METER TABLES */
@@ -376,6 +378,39 @@ let energyOperation = "";
 
 createMeterTables();
 
+/* READING BOX TOOLTIPS */
+tablesBox.querySelectorAll("tr[data-meter]").forEach(row => {
+    const [meterId, flow] = row.dataset.meter.split("_");
+    const flowName = flow === "import" ? "Import" : "Export";
+    let message = "";
+
+    if (meterId === "rtpp1" || meterId === "rtpp2") {
+        const kiosk = meterId === "rtpp1" ? "RTPP-1" : "RTPP-2";
+
+        message =
+            `${flowName} reading from the energy meter at ${kiosk} kiosk.`;
+
+    } else if (
+        ["chittoor1", "chittoor2", "ict1hv", "ict2hv"].includes(meterId)
+    ) {
+        message = `${flowName} reading from EM 400 KV ACTUALS.`;
+
+    } else if (
+        ["ict1lv", "ict2lv", "kalikiri1", "kalikiri2",
+         "madanapalli1", "madanapalli2"].includes(meterId)
+    ) {
+        message = `${flowName} reading from 220 KV ACTUALS.`;
+    }
+
+    if (message) {
+        row.querySelectorAll(".energy-start, .energy-end")
+            .forEach(input => {
+                input.title = message;
+                input.parentElement.title = message;
+            });
+    }
+});
+
 function getEnergyRows() {
 
     return Array.from(tablesBox.querySelectorAll("tr[data-meter]"));
@@ -487,6 +522,8 @@ function clearEnergyRows() {
 async function openEnergyDate(date) {
 
     if (!signedInUser) return;
+
+    window.energyReportDate.set(date);
 
     const version = ++loadVersion;
 

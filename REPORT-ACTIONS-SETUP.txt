@@ -1,0 +1,52 @@
+COMMON REPORT BUTTONS AND INTERRUPTION PERIODS
+
+This update adds:
+1. Interruption periods: all saved dates, calendar month, rolling 1/3/6 months, 1 year and custom From/To.
+2. Equipment history applies the chosen period to one equipment; Period-wise — all equipment includes every equipment in 400 kV, 220 kV, ICT order.
+3. Detail rows, equipment totals and overall sum of confirmed durations. Unconfirmed timings are listed and excluded from duration totals.
+4. A Back link plus direct 400 KV MD and 220 KV MD shortcuts on the interruption page.
+5. A common bottom action bar: View, Print, PDF, Excel, Word, WhatsApp with vector symbols and consistent colours.
+
+APPLIES TO
+Home MD reports, Daily Consumption, Energy Meter Readings, Monthly Energy selector / register, Consolidated Reports, Interruptions.
+Login and index redirect are not report pages and were left alone.
+
+EXPORT DETAILS
+Existing daily / energy / consolidated Print, Excel, Word and WhatsApp handlers are reused, preserving their established formats and save guards.
+View previews saved daily text; other data-entry previews show currently displayed readings and identify that unsaved edits may be present.
+Consolidated View uses the original View Report action to load its selected date.
+New Excel exports for interruptions, demand and monthly registers use real .xlsx via ExcelJS. Internet is needed to load the export library on first use.
+New Word exports use Word-compatible HTML .doc, matching the existing project's Word approach. They are not .docx.
+PDF opens the browser print dialog: choose Save as PDF. It does not silently download a PDF.
+WhatsApp opens a share composer; it does not send automatically. Long new reports are copied to clipboard and WhatsApp opened for pasting, or a message asks you to share Word/Excel if clipboard access is unavailable.
+
+PERIOD DEFINITIONS
+Rolling periods end on the selected To date. For example Last 3 months ending 13/10/2026 includes 14/07/2026 through 13/10/2026.
+Calendar month selects the complete month. Custom dates include both endpoints.
+Entries are grouped by start date and include their full outage duration. They are not clipped at date-range or month boundaries.
+Overall duration adds per-equipment durations, not unique station downtime. Simultaneous interruptions on different equipment count separately.
+Blank timings never become zero-duration confirmed records.
+
+INSTALL
+Back up your current folder first. Extract the updated ZIP in a separate folder.
+Copy all updated HTML pages and new/updated feature files into your current project folder, or open the complete extracted project for testing.
+Hard refresh Ctrl+Shift+R after opening with Live Server.
+No additional Firebase rules are needed beyond the Demand/Interruptions rules already supplied.
+
+UPDATED / NEW FILES FOR THIS UPDATE
+home.html
+Consumption Particulars.html
+energy-meter.html
+monthly-energy.html
+monthly-register.html
+consolidated-report.html
+interruptions.html
+interruptions-core.js
+interruptions-page.js
+demand-home.js
+report-actions.js (NEW)
+report-actions.css (NEW)
+REPORT-ACTIONS-SETUP.txt (NEW)
+
+Preservation: consumption.js, daily-page-controls.js, firebase-save.js, energy-meter.js, energy-cloud.js, monthly-energy.js, monthly-register-controls.js, auth-guard.js and service-worker.js were not edited in this update.
+Logic checks: 17 tests passed, including inclusive custom dates, month/year boundaries, overnight durations and equipment order. Module syntax and HTML connections were checked. Actual browser layout/export clicks and live Firebase were not tested in the build environment because no browser executable was available; verify these on your laptop before GitHub upload.

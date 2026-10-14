@@ -82,6 +82,7 @@ const monthlyMeterSettings = {
 };
 /* PAGE ELEMENTS */
 const registerMonth = document.getElementById("registerMonth");
+registerMonth.value = window.energyReportDate.get().slice(0, 7);
 const registerPanel = document.getElementById("registerPanel");
 const registerTitle = document.getElementById("registerTitle");
 const registerStatus = document.getElementById("registerStatus");
@@ -112,6 +113,8 @@ function getMonthlyChannels(settings) {
     { key: "secondExport", label: secondLabel + " Export" }
   ];
 }
+
+window.monthlyMeterConfiguration = {settings: monthlyMeterSettings, channels: getMonthlyChannels};
 
 /* CREATE THE SELECTED MONTH REGISTER */
 function createMonthlyRegister() {
@@ -651,6 +654,8 @@ registerPanel.addEventListener("input", function (event) {
   /* THIS SECTION EXISTS ONLY ON MONTHLY-ENERGY PAGE */
   if (!dateInput || !viewButton) return;
 
+  dateInput.value = window.energyReportDate.get();
+
   let requestVersion = 0;
 
   viewButton.disabled = true;
@@ -874,6 +879,16 @@ registerPanel.addEventListener("input", function (event) {
 
     /* DATE CHANGES MUST CLEAR THE PREVIOUS REPORT */
     dateInput.addEventListener("change", function () {
+      if (!window.energyReportDate.valid(dateInput.value)) {
+        dateInput.value = window.energyReportDate.get();
+        return;
+      }
+      window.energyReportDate.set(dateInput.value);
+      const month = dateInput.value.slice(0, 7);
+      if (registerMonth.value !== month && (!registerMonth.max || month <= registerMonth.max)) {
+        registerMonth.value = month;
+        registerMonth.dispatchEvent(new Event("change", {bubbles: true}));
+      }
       requestVersion++;
       reportBody.hidden = true;
       tables.innerHTML = "";
@@ -2353,7 +2368,8 @@ new MutationObserver(updateMonthlyPrintButton).observe(
   }
 
   let today = indiaToday();
-  const requestedMonth = new URLSearchParams(window.location.search).get("month");
+  const requestedMonth = window.location.pathname.endsWith("/consolidated-report.html")
+    ? null : new URLSearchParams(window.location.search).get("month");
   if (/^\d{4}-(0[1-9]|1[0-2])$/.test(requestedMonth || "") &&
       requestedMonth <= today.monthKey) {
     registerMonth.value = requestedMonth;

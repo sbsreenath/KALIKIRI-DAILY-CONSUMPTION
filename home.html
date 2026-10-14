@@ -9,6 +9,10 @@
 
     <link rel="stylesheet" href="design.css">
     <script type="module" src="auth-guard.js"></script>
+    <link rel="stylesheet" href="interruptions-menu.css">
+    <script type="module" src="interruptions-menu.js"></script>
+    <link rel="stylesheet" href="demand-home.css">
+    <script type="module" src="demand-home.js"></script>
 </head>
 
 <body>
@@ -142,38 +146,8 @@
   </a>
 </nav>
 
-    <main style="max-width: 1100px; margin: auto; padding: 24px;">
-        <h1>KALIKIRI SUBSTATION PORTAL</h1>
-
-        <p>Daily reports and energy meter readings in one place.</p>
-
-        <div class="readings-grid">
-            <section class="reading-card">
-                <h2>Energy Meter Readings</h2>
-
-                <p>
-                    Enter meter readings and calculate
-                    daily energy units.
-                </p>
-
-                <a href="energy-meter.html">
-                    Open Energy Meter Readings →
-                </a>
-            </section>
-
-            <section class="reading-card">
-                <h2>Daily Consumption</h2>
-
-                <p>
-                    Enter consumption particulars,
-                    generate and share reports.
-                </p>
-
-                <a href="Consumption Particulars.html">
-                    Open Daily Consumption →
-                </a>
-            </section>
-        </div>
+    <main class="home-records">
+        <section id="demandHome" aria-label="Maximum and minimum demand records"></section>
     </main>
 <script>
   (() => {
@@ -229,5 +203,7 @@
     });
   })();
 </script>
+<link rel="stylesheet" href="report-actions.css">
+<script type="module" src="report-actions.js"></script>
 </body>
 </html>

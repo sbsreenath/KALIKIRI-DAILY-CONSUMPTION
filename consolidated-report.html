@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="shared-energy-date.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -145,6 +146,7 @@
 </nav>
 
 <main>
+<a class="report-back" href="home.html"><span aria-hidden="true">←</span> Back</a>
   <!-- REQUIRED ELEMENTS FOR THE SHARED REGISTER SCRIPT -->
   <div hidden aria-hidden="true">
     <input type="month" id="registerMonth">
@@ -281,5 +283,7 @@
     });
   })();
 </script>
+<link rel="stylesheet" href="report-actions.css">
+<script type="module" src="report-actions.js"></script>
 </body>
 </html>

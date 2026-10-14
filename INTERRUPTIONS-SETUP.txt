@@ -1,0 +1,10 @@
+INTERRUPTIONS
+
+Home > INTERRUPTIONS > 400 kV Lines / 220 kV Lines / ICTs > equipment.
+Daily saved interruption text is read directly from dailyReports. Manual entries and review corrections are saved separately in interruptions. Existing daily calculations and save code are unchanged.
+Unknown equipment/timings remain under Review needed. Confirm through Review. Original daily report text is not changed.
+Dates/times use IST. Duration = To date/time minus From date/time. Overnight times are supported; explicit dates can span multiple days.
+Select Period for all dates, calendar month, rolling 1/3/6 months, 1 year or custom dates. Equipment history filters one equipment; Period-wise — all equipment lists 400 kV then 220 kV then ICT records. Full duration is counted by start date, without clipping at period boundaries.
+Missing timings are excluded from confirmed totals. Simultaneous outages count per equipment. Manual entries matching equipment and exact From/To of an already-loaded record are blocked as duplicates.
+Publish the supplied interruptions rule inside your existing Firestore rules if permission-denied appears. Keep existing rules. Do not replace the complete rules file with a snippet.
+See REPORT-ACTIONS-SETUP.txt for exports, common colours/symbols and installation.

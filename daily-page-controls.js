@@ -2,6 +2,7 @@ import {dailyCloudState,getSavedDaily,saveDaily,loadDailyEnergy} from "./firebas
 
 function startDailyControls() {
  const date=document.getElementById("reportDate");
+ date.value=window.energyReportDate.get();
  const save=document.getElementById("saveDaily");
  const status=document.getElementById("dailySaveStatus");
  const title=document.getElementById("dailySaveTitle");
@@ -91,6 +92,7 @@ function startDailyControls() {
  }
  async function openDate(value){
   if(!dailyCloudState().ready){date.value=value;status.textContent="Waiting for saved reports to load...";return;}
+  window.energyReportDate.set(value);
   const ticket=++version;currentDate=value;date.value=value;busy=true;update();
   const entry=getSavedDaily(value);hydrate(entry);
   status.textContent=entry?"Saved daily report loaded.":"Not saved yet. Review values and Save Readings.";

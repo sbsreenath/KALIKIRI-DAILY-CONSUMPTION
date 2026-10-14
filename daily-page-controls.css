@@ -25,3 +25,8 @@ body.daily-consumption-page {padding-bottom:var(--daily-save-space,170px);}
 .daily-consumption-page .dashboard-main input,.daily-consumption-page .dashboard-main textarea {scroll-margin-bottom:var(--daily-save-space,170px);}
 @media(max-width:600px){.daily-consumption-page #dailySaveBar {padding:10px 12px;padding-bottom:calc(10px + env(safe-area-inset-bottom));gap:8px;}.daily-save-details {flex-basis:100%;}.daily-save-actions {width:100%;}.daily-save-actions button {flex:1 1 auto;}.daily-consumption-page #reportDate {min-width:0;width:100%;}}
 @media print {body.daily-consumption-page{padding-bottom:0;}#dailySaveBar,#dailyUnsavedDialog,.daily-source-controls{display:none!important;}}
+
+/* Plain reading boxes, like the monthly register. */
+.daily-consumption-page .readings-grid input[type="number"] {appearance:textfield;-moz-appearance:textfield;}
+.daily-consumption-page .readings-grid input[type="number"]::-webkit-inner-spin-button,
+.daily-consumption-page .readings-grid input[type="number"]::-webkit-outer-spin-button {-webkit-appearance:none;margin:0;}

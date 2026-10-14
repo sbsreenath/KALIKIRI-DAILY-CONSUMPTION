@@ -1,0 +1,8 @@
+HOME — MAXIMUM DEMAND SO FAR
+
+Home contains MD SO FAR with 400 KV MD and 220 KV MD side submenus. Select a submenu to open that group. Only maximum demand is displayed; minimum demand was removed at your request.
+Enter MW and record date. Time is optional. Save each equipment separately. Values are saved to demandRecords with version checks to avoid overwriting another device's change.
+The existing Demand Firebase rules are sufficient. Viewers read only; enabled admin/editor users can edit.
+The INTERRUPTIONS tab is below MD SO FAR. Both tabs follow the top Home width/left alignment with compact height.
+Auto comparison with daily readings and LC filtering remain deferred. Current demand records are manual only.
+See REPORT-ACTIONS-SETUP.txt for common bottom View, Print, PDF, Excel, Word and WhatsApp buttons and installation details.

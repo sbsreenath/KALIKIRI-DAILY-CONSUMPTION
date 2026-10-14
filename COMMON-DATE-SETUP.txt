@@ -1,0 +1,13 @@
+COMMON ENERGY REPORT DATE
+
+Upload the complete folder to the existing GitHub project.
+The new shared-energy-date.js must be uploaded with the modified files.
+Then refresh the app (Ctrl+Shift+R on the laptop).
+
+Daily Consumption, Energy Meter and Consolidated Reports keep the last selected date on this browser.
+Monthly Energy / Register opens the selected date's month; explicit month navigation is retained.
+Changing only a monthly register month does not change the shared day.
+First use without a saved selection defaults to today in India.
+Existing Save / Stay / Discard dialogs remain in place.
+Consolidated reports still use View Report to load their tables.
+Date selection is local to this browser/device, not shared across users.
